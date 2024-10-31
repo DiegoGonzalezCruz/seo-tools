@@ -1,3 +1,4 @@
+import { auth } from '@/auth'
 import Login from '@/components/Login/Login'
 
 export const metadata = {
@@ -5,8 +6,9 @@ export const metadata = {
 }
 
 export default async function Home() {
+  const session = await auth()
   // console.log(session, 'session')
-  if (true) {
+  if (session) {
     return (
       <main className="flex min-h-screen h-full w-full  flex-col items-center justify-center ">
         Hello there

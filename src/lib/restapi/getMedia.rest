@@ -1,0 +1,4 @@
+GET https://staging.wecu.com/wp-json/wp/v2/media?per_page=10
+
+content-type: application/json
+Authorization: Bearer 

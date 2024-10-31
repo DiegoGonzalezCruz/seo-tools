@@ -2,20 +2,110 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer utilities {
+  .debug {
+    @apply bg-red-500;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  .debug1 {
+    @apply border-2 border-red-500;
+  }
+
+  .debug2 {
+    @apply border-2 border-green-500;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* .card {
+    @apply bg-white shadow-md rounded-lg border-2 border-primary  hover:shadow-lg hover:border-secondary transition-all duration-300 w-1/3 p-5;
+  } */
+  .DialogOverlay {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .DialogContent {
+    background: white;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow:
+      hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+      hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+    max-width: 500px;
+    width: 90%;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 205 100% 95%;
+    --foreground: 205 5% 10%;
+
+    --card: 205 50% 90%;
+    --card-foreground: 205 5% 15%;
+
+    --popover: 205 100% 95%;
+    --popover-foreground: 205 100% 10%;
+
+    --primary: 205 59% 57%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 205 30% 70%;
+    --secondary-foreground: 0 0% 0%;
+
+    --muted: 167 30% 85%;
+    --muted-foreground: 205 5% 35%;
+
+    --accent: 167 30% 80%;
+    --accent-foreground: 205 5% 15%;
+
+    --destructive: 0 100% 30%;
+    --destructive-foreground: 205 5% 90%;
+
+    --border: 205 30% 50%;
+
+    --input: 205 30% 30%;
+
+    --ring: 205 59% 57%;
+
+    --radius: 0.75rem;
+  }
+  .dark {
+    --background: 205 50% 10%;
+    --foreground: 205 5% 90%;
+    --card: 205 50% 10%;
+    --card-foreground: 205 5% 90%;
+    --popover: 205 50% 5%;
+    --popover-foreground: 205 5% 90%;
+    --primary: 205 59% 57%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 205 30% 20%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 167 30% 25%;
+    --muted-foreground: 205 5% 60%;
+    --accent: 167 30% 25%;
+    --accent-foreground: 205 5% 90%;
+    --destructive: 0 100% 30%;
+    --destructive-foreground: 205 5% 90%;
+    --border: 205 30% 30%;
+    --input: 205 30% 30%;
+    --ring: 205 59% 57%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
