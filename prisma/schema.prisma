@@ -1,0 +1,103 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                 String              @id @default(cuid())
+  name               String?
+  email              String              @unique
+  emailVerified      DateTime?
+  image              String?
+  accounts           Account[]
+  sessions           Session[]
+  role               Role                @default(USER)
+  Authenticator      Authenticator[]
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  wordpressInstances WordPressInstance[]
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+// Optional for WebAuthn support
+model Authenticator {
+  id                   String  @id @default(cuid())
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model WordPressInstance {
+  id          Int         @id @default(autoincrement())
+  url         String
+  appPassword String      @db.VarChar(500)
+  appUsername String      @db.VarChar(500)
+  mediaItems  MediaItem[]
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isActive    Boolean     @default(false)
+}
+
+model MediaItem {
+  id                  Int               @id @default(autoincrement())
+  wordpressInstanceId Int
+  originalUrl         String
+  altTag              String?
+  userId              Int               @unique
+  wordpressInstance   WordPressInstance @relation(fields: [wordpressInstanceId], references: [id])
+}
+
+enum Role {
+  ADMIN
+  USER
+}

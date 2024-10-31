@@ -1,19 +1,16 @@
-import { Button } from '@/components/ui/button'
+"use client";
+import { Button } from "@/components/ui/button";
+import { signIn } from "next-auth/react";
 
-const SignInComponent = ({ className, redirectTo = '/dashboard' }) => {
+const SignInComponent = ({ className, redirectTo = "/dashboard" }) => {
   return (
-    <form
-      className={className}
-      action={async () => {
-        'use server'
-        await signIn('github', { redirectTo })
-      }}
+    <Button
+      className="btn btn-outline btn-primary"
+      onClick={() => signIn("github")}
     >
-      <Button className="btn btn-outline btn-primary" type="submit">
-        Signin with Github
-      </Button>
-    </form>
-  )
-}
+      Signin with Github
+    </Button>
+  );
+};
 
-export default SignInComponent
+export default SignInComponent;
