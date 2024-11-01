@@ -1,39 +1,39 @@
-'use client'
-import { useState } from 'react'
-import toast from 'react-hot-toast'
-import { Button } from '@components/ui/button'
-import { Input } from '@components/ui/input'
+"use client";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { Button } from "@components/ui/button";
+import { Input } from "@components/ui/input";
 
-const InputImageURL = ({ userData, onSubmit, buttonLabel = 'Submit' }) => {
-  const [urlInput, setUrlInput] = useState('')
-  const [conversionStatus, setConversionStatus] = useState('')
+const InputImageURL = ({ userData, onSubmit, buttonLabel = "Submit" }) => {
+  const [urlInput, setUrlInput] = useState("");
+  const [conversionStatus, setConversionStatus] = useState("");
 
   const handleUrlSubmit = async () => {
     try {
-      toast.loading('Processing...')
+      toast.loading("Processing...");
       if (!urlInput.trim()) {
-        toast.error('Please enter a valid URL.')
-        throw new Error('Please enter a valid URL.')
+        toast.error("Please enter a valid URL.");
+        throw new Error("Please enter a valid URL.");
       }
 
       // Call the passed function
-      const result = await onSubmit(urlInput, userData)
+      const result = await onSubmit(urlInput, userData);
 
-      toast.dismiss() // Dismiss the loading toast
+      toast.dismiss(); // Dismiss the loading toast
       if (result.success) {
-        setConversionStatus(`Operation successful: ${result.message}`)
-        toast.success('Operation successful.')
+        setConversionStatus(`Operation successful: ${result.message}`);
+        toast.success("Operation successful.");
       } else {
-        setConversionStatus('Operation failed.')
-        toast.error('Operation failed.')
+        setConversionStatus("Operation failed.");
+        toast.error("Operation failed.");
       }
     } catch (error) {
-      toast.dismiss() // Ensure the toast is dismissed on error
-      console.error('Error:', error)
-      setConversionStatus('Error during operation.')
-      toast.error('Error during operation.')
+      toast.dismiss(); // Ensure the toast is dismissed on error
+      console.error("Error:", error);
+      setConversionStatus("Error during operation.");
+      toast.error("Error during operation.");
     }
-  }
+  };
 
   return (
     <div className="w-5/6 h-full flex flex-col items-center justify-center gap-10">
@@ -65,7 +65,7 @@ const InputImageURL = ({ userData, onSubmit, buttonLabel = 'Submit' }) => {
 
       {conversionStatus && <p>{conversionStatus}</p>}
     </div>
-  )
-}
+  );
+};
 
-export default InputImageURL
+export default InputImageURL;

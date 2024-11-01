@@ -6,7 +6,7 @@ const SignInComponent = ({ className, redirectTo = "/dashboard" }) => {
   return (
     <Button
       className="btn btn-outline btn-primary"
-      onClick={() => signIn("github")}
+      onClick={() => signIn("github", { callbackUrl: redirectTo })}
     >
       Signin with Github
     </Button>

@@ -1,5 +1,5 @@
-'use client'
-import useUserData from '@/lib/hooks/useUserData'
+"use client";
+import useUserData from "@/lib/hooks/useUserData";
 import {
   backupOldImage,
   convertAndUploadImage,
@@ -8,10 +8,10 @@ import {
   replaceImageInWordPress,
   saveImage,
   uploadImage,
-} from '@/lib/wordpress'
-import { decode } from 'html-entities'
-import React from 'react'
-import toast from 'react-hot-toast'
+} from "@/lib/wordpress";
+import { decode } from "html-entities";
+import React from "react";
+import toast from "react-hot-toast";
 import {
   Card,
   CardContent,
@@ -19,14 +19,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Button } from '../ui/button'
-import Image from 'next/image'
+} from "@/components/ui/card";
+import { Button } from "../ui/button";
+import Image from "next/image";
 
 const MediaListings = ({ media, page }) => {
   // console.log(media, 'media')
   // console.log(page, 'page')
-  const { data: userData } = useUserData()
+  const { data: userData } = useUserData();
   // console.log(userData, 'userData')
   const handleUpgradeImage = async (mediaObject) => {
     toast.promise(
@@ -34,19 +34,19 @@ const MediaListings = ({ media, page }) => {
         // Convert the image to WebP
         const { fullFilename, webpBase64 } = await convertImage(
           mediaObject,
-          userData,
-        )
+          userData
+        );
 
         // Upload the new WebP image and return the result
-        return await saveImage(webpBase64, fullFilename, page.slug)
+        return await saveImage(webpBase64, fullFilename, page.slug);
       })(),
       {
-        loading: 'Upgrading image...',
-        success: 'Image upgraded successfully!',
-        error: 'Failed to upgrade image.',
-      },
-    )
-  }
+        loading: "Upgrading image...",
+        success: "Image upgraded successfully!",
+        error: "Failed to upgrade image.",
+      }
+    );
+  };
 
   return (
     <div className=" flex flex-wrap gap-5">
@@ -59,7 +59,7 @@ const MediaListings = ({ media, page }) => {
           >
             <CardHeader>
               <figure>
-                <Image
+                <img
                   src={item.source_url}
                   alt={item.alt_text}
                   width={150}
@@ -87,10 +87,10 @@ const MediaListings = ({ media, page }) => {
               </Button>
             </CardFooter>
           </Card>
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};
 
-export default MediaListings
+export default MediaListings;

@@ -5,42 +5,42 @@ import {
   FileText,
   HelpCircle,
   Image,
-} from 'lucide-react'
+} from "lucide-react";
 
 export const menu = [
   {
-    title: 'Update Alt Tags with AI',
+    title: "Update Alt Tags with AI",
     icon: (
       // icon for a page
       <Brain alt="Brain icon" />
     ),
-    href: '/dashboard/alt-tagger',
+    href: "/dashboard/alt-tagger",
   },
   {
-    title: 'Update Images in Pages',
+    title: "Update Images in Pages",
     icon: <BookOpen alt="Book icon" />,
-    href: '/dashboard/pages',
+    href: "/dashboard/pages",
   },
   {
-    title: 'URL to WebP',
+    title: "URL to WebP",
     icon: <Image alt="Image icon" />,
-    href: '/dashboard/get-images-by-url',
+    href: "/dashboard/get-images-by-url",
   },
   {
-    title: 'WebPage to PDF',
-    href: '/dashboard/pdf-creator',
+    title: "WebPage to PDF",
+    href: "/dashboard/pdf-creator",
     icon: <FileText alt="File icon" />,
   },
   {
-    title: 'Href Extdashboard/ractor ',
-    href: '/dashboard/url-analyzer',
+    title: "Href Extractor ",
+    href: "/dashboard/url-analyzer",
     icon: <Carrot alt="Carrot icon" />,
   },
-]
+];
 
 export const configMenu = [
   {
-    title: 'Wordpress Configuration',
+    title: "Wordpress Configuration",
     icon: (
       // icon for General Configuration
       <svg
@@ -57,14 +57,14 @@ export const configMenu = [
         ></path>
       </svg>
     ),
-    href: '/dashboard/wp-configuration',
+    href: "/dashboard/wp-configuration",
   },
-]
+];
 
 export const helpMenu = [
   {
-    title: 'Help Center',
+    title: "Help Center",
     icon: <HelpCircle alt="Help icon" />,
-    href: '/dashboard/help',
+    href: "/dashboard/help",
   },
-]
+];
