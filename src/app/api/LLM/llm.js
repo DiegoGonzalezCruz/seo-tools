@@ -22,7 +22,7 @@ async function isOllamaRunning() {
       return true;
     }
   } catch (error) {
-    toast.error("Ollama is not running. Please start it and try again.");
+    // toast.error("Ollama is not running. Please start it and try again.");
     console.error("Ollama is not running ❌:", error);
     return false;
   }
