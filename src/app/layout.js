@@ -19,7 +19,9 @@ export default async function RootLayout({ children }) {
       <body className={inter.className}>
         <Toaster />
         <ClientProvider>
-          <div className="flex flex-col min-h-screen  w-full">{children}</div>
+          <div className="flex flex-col min-h-screen  w-full  items-center justify-center">
+            {children}
+          </div>
         </ClientProvider>
       </body>
     </html>

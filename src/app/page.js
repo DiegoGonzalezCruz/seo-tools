@@ -10,7 +10,7 @@ export default async function Home() {
   const session = await auth();
   console.log(session, "session");
 
-  if (session) {
+  if (!session) {
     return <LandingPage />;
   } else {
     return (
