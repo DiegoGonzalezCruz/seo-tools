@@ -1,5 +1,5 @@
-import React from 'react'
-import Modal from '../Modals/Modal'
+import React from "react";
+import Modal from "../Modals/Modal";
 import {
   Dialog,
   DialogClose,
@@ -9,11 +9,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import { Button } from '../ui/button'
-import { Label } from '../ui/label'
-import { Input } from '../ui/input'
-import Image from 'next/image'
+} from "@/components/ui/dialog";
+import { Button } from "../ui/button";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import Image from "next/image";
 
 const ModalDetails = ({ media, isOpen, onClose }) => {
   return (
@@ -23,15 +23,15 @@ const ModalDetails = ({ media, isOpen, onClose }) => {
           details
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] md:max-w-xl">
         <DialogHeader>
           <DialogTitle>Media Details</DialogTitle>
           <DialogDescription>
             These are the details of the media item
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <Image
+        <div className=" gap-4 py-4 w-full flex flex-col items-center justify-center">
+          <img
             src={media.source_url}
             alt={media.alt_text}
             className="w-96 h-96 object-scale-down"
@@ -49,7 +49,7 @@ const ModalDetails = ({ media, isOpen, onClose }) => {
               media.alt_text
             )}
           </p>
-          <p className="py-4">
+          <p className="py-4 w-full text-sm">
             <span className="font-bold">URL: </span>
             {media.source_url}
           </p>
@@ -61,7 +61,7 @@ const ModalDetails = ({ media, isOpen, onClose }) => {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
-}
+  );
+};
 
-export default ModalDetails
+export default ModalDetails;

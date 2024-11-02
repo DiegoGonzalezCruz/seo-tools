@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import ImageItem from './ImageItem'
-import toast from 'react-hot-toast'
-import { identifyAndUpdateAltTag } from '@/lib/openAI'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Button } from '../ui/button'
-import { Label } from '../ui/label'
-import { Input } from '../ui/input'
+import { useState } from "react";
+import ImageItem from "./ImageItem";
+import toast from "react-hot-toast";
+import { identifyAndUpdateAltTag } from "@/lib/openAI";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Button } from "../ui/button";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
 import {
   Table,
   TableBody,
@@ -14,12 +14,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
+} from "@/components/ui/table";
 
 const MediaList = ({ media }) => {
-  const [checkedItems, setCheckedItems] = useState({})
-  const [showOnlyMissingAlt, setShowOnlyMissingAlt] = useState(false)
-  const queryClient = useQueryClient()
+  const [checkedItems, setCheckedItems] = useState({});
+  const [showOnlyMissingAlt, setShowOnlyMissingAlt] = useState(false);
+  const queryClient = useQueryClient();
 
   // console.log(showOnlyMissingAlt, "showOnlyMissingAlt");
   // console.log(media, "media");
@@ -43,56 +43,56 @@ const MediaList = ({ media }) => {
   // };
   const batchUpdateAltTagMutation = useMutation({
     mutationFn: async (checkedItems) => {
-      const ids = Object.keys(checkedItems)
-      console.log(ids, 'ids for batch updating')
+      const ids = Object.keys(checkedItems);
+      console.log(ids, "ids for batch updating");
       return await Promise.all(
         ids.map(async (id) => {
           const mediaItem = media.images.find(
-            (image) => image.id === Number(id),
-          )
+            (image) => image.id === Number(id)
+          );
           if (mediaItem) {
-            const newAltTag = await identifyAndUpdateAltTag(mediaItem)
-            return { id, newAltTag }
+            const newAltTag = await identifyAndUpdateAltTag(mediaItem);
+            return { id, newAltTag };
           }
-          return null
-        }),
-      )
+          return null;
+        })
+      );
     },
     onMutate: () => {
-      toast.loading('Analyzing images...')
+      toast.loading("Analyzing images...");
     },
     onSuccess: (results) => {
-      toast.dismiss()
+      toast.dismiss();
       results.forEach((result) => {
         if (result) {
           // Here you would ideally update your cache if necessary
-          queryClient.setQueryData(['media', result.id], (oldData) => {
-            return { ...oldData, alt_text: result.newAltTag }
-          })
+          queryClient.setQueryData(["media", result.id], (oldData) => {
+            return { ...oldData, alt_text: result.newAltTag };
+          });
         }
-      })
-      queryClient.invalidateQueries({ queryKey: 'media' })
-      toast.success('All selected images analyzed successfully')
+      });
+      queryClient.invalidateQueries({ queryKey: "media" });
+      toast.success("All selected images analyzed successfully");
     },
     onError: (error) => {
-      toast.dismiss()
-      toast.error('Error while analyzing images: ' + error.message)
+      toast.dismiss();
+      toast.error("Error while analyzing images: " + error.message);
     },
-  })
+  });
 
   const handleAllCheckboxes = (isChecked) => {
     if (isChecked) {
-      const newCheckedItems = {}
+      const newCheckedItems = {};
       media.images.forEach((image) => {
         if (!showOnlyMissingAlt || !image.alt) {
-          newCheckedItems[image.id] = true
+          newCheckedItems[image.id] = true;
         }
-      })
-      setCheckedItems(newCheckedItems)
+      });
+      setCheckedItems(newCheckedItems);
     } else {
-      setCheckedItems({})
+      setCheckedItems({});
     }
-  }
+  };
 
   const handleCheckboxChange = (id, isChecked) => {
     setCheckedItems((prev) => {
@@ -100,18 +100,18 @@ const MediaList = ({ media }) => {
         return {
           ...prev,
           [id]: true,
-        }
+        };
       } else {
-        const newState = { ...prev }
-        delete newState[id]
-        return newState
+        const newState = { ...prev };
+        delete newState[id];
+        return newState;
       }
-    })
-  }
+    });
+  };
 
   const filteredImages = showOnlyMissingAlt
     ? media.images.filter((image) => !image.alt_text)
-    : media.images
+    : media.images;
 
   return (
     <div className=" w-full ">
@@ -164,7 +164,7 @@ const MediaList = ({ media }) => {
         </TableBody>
       </Table>
     </div>
-  )
-}
+  );
+};
 
-export default MediaList
+export default MediaList;

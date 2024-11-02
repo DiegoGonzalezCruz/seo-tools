@@ -1,6 +1,7 @@
 import Aside from "@/components/Layout/Aside";
 
 import { auth } from "@/auth";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 export const metadata = {
   title: "Automatic Tagger",
@@ -12,8 +13,15 @@ export default async function DashboardLayout({ children }) {
 
   return (
     <div className="flex w-full">
-      <Aside />
-      <main className="flex-1 p-5">{children}</main>
+      <SidebarProvider>
+        <Aside />
+        <main>
+          <SidebarTrigger />
+          {children}
+        </main>
+      </SidebarProvider>
+
+      {/* <main className="flex-1 p-5">{children}</main> */}
     </div>
   );
 }
