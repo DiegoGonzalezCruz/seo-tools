@@ -15,11 +15,13 @@ import React from "react";
 
 const Contact = () => {
   const [email, setEmail] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission
-    console.log("Submitted email:", email);
+
+    console.log("Submitted email:", email, "Description:", description);
   };
   return (
     <section id="support" className="w-full py-12 md:py-24 lg:py-32">
@@ -27,11 +29,11 @@ const Contact = () => {
         <div className="grid gap-6 lg:grid-cols-2 items-center">
           <div className="space-y-4">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Need Help?
+              Need a Feature?
             </h2>
             <p className="text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Our support team is here to assist you with any questions or
-              issues you may have.
+              Our support team is here to assist you with any feature you would
+              like.
             </p>
           </div>
           <Card>
@@ -43,6 +45,14 @@ const Contact = () => {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
+                <Input
+                  placeholder="Describe your feature"
+                  type="text"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  required
+                />
+
                 <Input
                   placeholder="Enter your email"
                   type="email"

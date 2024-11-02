@@ -42,7 +42,7 @@ const Aside = () => {
                       : ""
                   }`}
                 >
-                  <Settings className="w-5 h-5" />
+                  {item.icon}
                   <span className="mx-2 text-sm font-medium">{item.title}</span>
                 </Link>
               );
