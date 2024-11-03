@@ -11,7 +11,7 @@ export const getActiveWordPressInstance = (userData) => {
   const base64Credentials = btoa(`${appUsername}:${appPassword}`);
   return { url, appPassword, appUsername, base64Credentials };
 };
-
+//
 export const getMediaByPage = async (page = 1, limit = 50, userData) => {
   try {
     const { url, base64Credentials } = getActiveWordPressInstance(userData);
