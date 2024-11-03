@@ -12,12 +12,12 @@ const SignInComponent = ({ className, redirectTo = "/dashboard" }) => {
       >
         Signin with Github
       </Button>
-      <Button
+      {/* <Button
         className="btn btn-outline btn-primary"
         onClick={() => signIn("google", { callbackUrl: redirectTo })}
       >
         Signin with Google
-      </Button>
+      </Button> */}
     </>
   );
 };
