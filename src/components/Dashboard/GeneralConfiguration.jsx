@@ -37,7 +37,7 @@ export default function GeneralConfiguration() {
   const [cloudAIEnabled, setCloudAIEnabled] = useState(true);
 
   return (
-    <div className="container mx-auto p-4 space-y-4">
+    <div className="container mx-auto p-4 space-y-4 debug1 h-full">
       <header className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">LLM Integration Dashboard</h1>
         <div className="flex items-center space-x-2">

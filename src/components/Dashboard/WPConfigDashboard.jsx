@@ -1,6 +1,3 @@
-import ConfigurationDashboard from "./ConfigurationDashboard";
-import GeneralConfiguration from "./GeneralConfiguration";
-
 const WPConfigDashboard = () => {
   return (
     <>
@@ -11,7 +8,6 @@ const WPConfigDashboard = () => {
             This app retrieves the media from a Wordpress REST API, analyzes the
             information from it.
           </p> */}
-          <GeneralConfiguration />
         </div>
       </div>
     </>

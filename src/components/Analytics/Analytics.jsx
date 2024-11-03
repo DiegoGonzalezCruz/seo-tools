@@ -4,7 +4,7 @@ import React from "react";
 const Analytics = () => {
   return (
     <>
-      <Script>
+      <Script id="ms-clarity">
         {`
        (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};

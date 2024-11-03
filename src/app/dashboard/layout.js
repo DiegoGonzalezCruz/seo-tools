@@ -15,7 +15,7 @@ export default async function DashboardLayout({ children }) {
     <div className="flex w-full">
       <SidebarProvider>
         <Aside />
-        <main>
+        <main className=" w-full">
           <SidebarTrigger />
           {children}
         </main>
