@@ -83,16 +83,17 @@ export const POST = async (req, res) => {
 
 export const GET = async (req, res) => {
   try {
-    const { userId } = req.query;
+    console.log("GET request WP received");
 
+    const userId = req.nextUrl.searchParams.get("userId"); // Extract 'userId' query parameter
+    // console.log(userId, "userId GET request 🔥🔥🔥🔥");
     if (!userId) {
       return Response.json({ error: "User ID is required" }, { status: 400 });
     }
-
     const wordpressInstances = await prisma.wordPressInstance.findMany({
       where: { userId },
     });
-
+    // console.log(wordpressInstances, "wordpressInstances GET request 🔥🔥🔥🔥");
     return Response.json({ wordpressInstances, status: 200 });
   } catch (error) {
     console.error("Request error", error);

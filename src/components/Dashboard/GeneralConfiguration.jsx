@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AlertCircle,
   Check,
@@ -35,7 +35,13 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { Skeleton } from "../ui/skeleton";
 
 import { useSession } from "next-auth/react";
-import { validateWordPressCredentials } from "@/lib/wordpress";
+import {
+  getActiveWordPressInstance,
+  getUserWPInstances,
+  getWPInstance,
+  validateWordPressCredentials,
+} from "@/lib/wordpress";
+import prisma from "@/lib/prisma";
 
 export default function GeneralConfiguration() {
   const [wpSiteURL, setWpSiteURL] = useState("");
@@ -44,10 +50,7 @@ export default function GeneralConfiguration() {
 
   const { data, status } = useSession();
   const user = data?.user;
-  // console.log(data?.user, "user");
-  // console.log(status, "status");
-
-  // check health using react query
+  // console.log(user, "user");
   const {
     data: healthCheckData,
     isLoading: healthCheckLoading,
@@ -125,7 +128,28 @@ export default function GeneralConfiguration() {
     },
   });
 
+  const { data: wpData } = useQuery({
+    queryKey: ["wp-instance-data", user],
+    queryFn: () => getUserWPInstances(user.id),
+    enabled: status === "authenticated" && !!user,
+  });
+  console.log(wpData, "wpData");
+
+  const wpActiveInstance = wpData?.filter((wp) => wp.isActive)[0];
+  // console.log(wpActiveInstance, "wpActiveInstance");
+
   // console.log(wordpressCheckData, "wordpressCheckData");
+  // Populate fields with wpData when it's loaded
+  useEffect(() => {
+    if (wpData && wpData.length > 0) {
+      const activeInstance = wpData.find((wp) => wp.isActive);
+      if (activeInstance) {
+        setWpSiteURL(activeInstance.url);
+        setWpUsername(activeInstance.appUsername);
+        setWpPassword(activeInstance.appPassword);
+      }
+    }
+  }, [wpData]);
 
   return (
     <div className="container mx-auto p-4 space-y-4  h-full">

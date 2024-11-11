@@ -11,6 +11,21 @@ export const getActiveWordPressInstance = (userData) => {
   const base64Credentials = btoa(`${appUsername}:${appPassword}`);
   return { url, appPassword, appUsername, base64Credentials };
 };
+
+export const getUserWPInstances = async (userId) => {
+  try {
+    const res = await fetch(`/api/wordpressInstances?userId=${userId}`);
+    const data = await res.json();
+    // console.log(data, "🍄🍄🍄🍄🍄🍄🍄");
+    if (data.status !== 200) {
+      return null;
+    }
+    return data.wordpressInstances;
+  } catch (e) {
+    console.error("Failed to fetch WordPress instances:", e);
+    return null;
+  }
+};
 //
 export const getMediaByPage = async (page = 1, limit = 50, userData) => {
   try {
@@ -53,6 +68,7 @@ export const getMediaByPage = async (page = 1, limit = 50, userData) => {
 };
 
 export const getWPInstance = async (userData) => {
+  // console.log(userData, "🍄🍄🍄🍄🍄🍄🍄");
   try {
     const { url, appPassword, userId } = getActiveWordPressInstance(userData);
     return { url, appPassword, userId };

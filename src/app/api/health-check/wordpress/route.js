@@ -36,14 +36,14 @@ export const POST = async (req) => {
     });
 
     if (response.ok) {
-      console.log("Authentication successful");
+      // console.log("Authentication successful");
       return new Response(true, { status: 200 });
     } else {
-      console.log("Authentication failed", response.statusText);
+      // console.log("Authentication failed", response.statusText);
       return new Response(false, { status: 401 });
     }
   } catch (error) {
-    console.error(`Error during authentication: ${error.message}`);
+    // console.error(`Error during authentication: ${error.message}`);
     return new Response(false, { status: 500 });
   }
 };
