@@ -4,7 +4,6 @@ import { PromptTemplate } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import sharp from "sharp";
 import { Ollama } from "@langchain/ollama";
-import toast from "react-hot-toast";
 
 const BASE_URL = "http://localhost:11434";
 const MODEL_LLAVA = "llava";
@@ -14,16 +13,19 @@ function removeQuotes(text) {
   return text.replace(/["]+/g, "");
 }
 
-async function isOllamaRunning() {
+export async function isOllamaRunning() {
   try {
     const response = await axios.get(BASE_URL); // Root endpoint for health check
     if (response.status === 200 && response.data === "Ollama is running") {
       console.log("Ollama is running 🚀");
       return true;
+    } else {
+      console.log("Ollama is not running. Please start it and try again.");
+      return false;
     }
   } catch (error) {
     // toast.error("Ollama is not running. Please start it and try again.");
-    console.error("Ollama is not running ❌:", error);
+    // console.error("Error ❌:", error);
     return false;
   }
 }

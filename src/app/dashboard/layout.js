@@ -4,8 +4,8 @@ import { auth } from "@/auth";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 export const metadata = {
-  title: "Automatic Tagger",
-  description: "Tags images automatically",
+  title: "Dashboard - SEO Tools",
+  description: "Set of Tools for SEO",
 };
 
 export default async function DashboardLayout({ children }) {

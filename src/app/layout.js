@@ -9,11 +9,6 @@ import Analytics from "@/components/Analytics/Analytics";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "Automatic Tagger",
-  description: "Tags images automatically",
-};
-
 export default async function RootLayout({ children }) {
   const session = await auth();
   return (

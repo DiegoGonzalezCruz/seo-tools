@@ -1,32 +1,32 @@
-'use client'
-import useUserData from '@/lib/hooks/useUserData'
-import { fetchUserData } from '@/lib/users'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
-import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { toast } from 'react-hot-toast'
-import WordpressInstancesList from './WordpressInstancesList'
-import Loading from '../Loading/Loading'
-import { validateWordPressCredentials } from '@/lib/wordpress'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
+"use client";
+import useUserData from "@/lib/hooks/useUserData";
+import { fetchUserData } from "@/lib/users";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import WordpressInstancesList from "./WordpressInstancesList";
+import Loading from "../Loading/Loading";
+import { validateWordPressCredentials } from "@/lib/wordpress";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 const ConfigurationDashboard = () => {
-  const { data: session, status } = useSession()
-  const isAuth = status !== 'authenticated'
-  const { data: userData, isSuccess, isLoading, isError } = useUserData()
+  const { data: session, status } = useSession();
+  const isAuth = status !== "authenticated";
+  const { data: userData, isSuccess, isLoading, isError } = useUserData();
   // console.log(userData, 'userData from ConfigurationDashboard')
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: {
-      wpSiteURL: '',
-      wpPassword: '',
-      wpUsername: '',
+      wpSiteURL: "",
+      wpPassword: "",
+      wpUsername: "",
     },
-  })
+  });
   // console.log(userData, 'userData')
 
   const saveCredentialsMutation = useMutation({
@@ -34,11 +34,11 @@ const ConfigurationDashboard = () => {
       const isValid = await validateWordPressCredentials(
         formData.wpSiteURL,
         formData.wpUsername,
-        formData.wpPassword,
-      )
+        formData.wpPassword
+      );
 
       if (!isValid) {
-        throw new Error('Invalid WordPress credentials')
+        throw new Error("Invalid WordPress credentials");
       }
 
       const rawFormData = {
@@ -46,46 +46,46 @@ const ConfigurationDashboard = () => {
         wpPassword: formData.wpPassword,
         userId: userData.id,
         wpUsername: formData.wpUsername,
-      }
+      };
 
-      const response = await fetch('/api/wordpressInstances', {
-        method: 'POST',
+      const response = await fetch("/api/wordpressInstances", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(rawFormData),
-      })
+      });
 
       if (!response.ok) {
-        throw new Error('Failed to save configuration')
+        throw new Error("Failed to save configuration");
       }
 
-      return response.json()
+      return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user', userData.id] })
-      toast.success('Configuration saved successfully')
+      queryClient.invalidateQueries({ queryKey: ["user", userData.id] });
+      toast.success("Configuration saved successfully");
     },
     onError: (error) => {
-      toast.error(error.message)
+      toast.error(error.message);
     },
-  })
+  });
 
   const onSubmit = (data) => {
-    saveCredentialsMutation.mutate(data)
-  }
+    saveCredentialsMutation.mutate(data);
+  };
 
   useEffect(() => {
     if (isSuccess && userData?.wordpressInstances?.length) {
-      const { url, appPassword, appUsername } = userData.wordpressInstances[0]
-      setValue('wpSiteURL', url)
-      setValue('wpPassword', appPassword)
-      setValue('wpUsername', appUsername)
+      const { url, appPassword, appUsername } = userData.wordpressInstances[0];
+      setValue("wpSiteURL", url);
+      setValue("wpPassword", appPassword);
+      setValue("wpUsername", appUsername);
     }
-  }, [isSuccess, userData, setValue])
+  }, [isSuccess, userData, setValue]);
 
-  if (isLoading) return <Loading />
-  if (isError) return <div>Error loading data</div>
+  if (isLoading) return <Loading />;
+  if (isError) return <div>Error loading data</div>;
 
   if (isSuccess)
     return (
@@ -97,7 +97,7 @@ const ConfigurationDashboard = () => {
           <Label className="input input-bordered flex items-center gap-2 w-full ">
             WP Site URL
             <Input
-              {...register('wpSiteURL')}
+              {...register("wpSiteURL")}
               type="text"
               className="input  w-fit  grow "
               placeholder="https://"
@@ -107,7 +107,7 @@ const ConfigurationDashboard = () => {
           <Label className="input input-bordered flex items-center gap-2 w-full">
             WP Password
             <Input
-              {...register('wpPassword')}
+              {...register("wpPassword")}
               type="password"
               className="grow"
               placeholder="Password"
@@ -117,7 +117,7 @@ const ConfigurationDashboard = () => {
           <Label className="input input-bordered flex items-center gap-2 w-full">
             WP Username
             <Input
-              {...register('wpUsername')}
+              {...register("wpUsername")}
               type="text"
               className="grow"
               placeholder="Username"
@@ -135,7 +135,7 @@ const ConfigurationDashboard = () => {
         </form>
         <WordpressInstancesList userData={userData} />
       </div>
-    )
-}
+    );
+};
 
-export default ConfigurationDashboard
+export default ConfigurationDashboard;

@@ -329,7 +329,7 @@ export const validateWordPressCredentials = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to validate credentials:", error);
+    // console.error("Failed to validate credentials:", error);
     return null;
   }
 };

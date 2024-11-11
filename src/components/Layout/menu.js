@@ -41,15 +41,15 @@ export const menu = [
 
 export const configMenu = [
   {
-    title: "Wordpress Configuration",
+    title: "Configuration",
     icon: <Cog alt="Cog icon" />,
     href: "/dashboard/configuration",
   },
-  {
-    title: "LLM Configuration",
-    icon: <BookOpen alt="Book icon" />,
-    href: "/dashboard/llm-configuration",
-  },
+  // {
+  //   title: "LLM Configuration",
+  //   icon: <BookOpen alt="Book icon" />,
+  //   href: "/dashboard/llm-configuration",
+  // },
 ];
 
 export const helpMenu = [

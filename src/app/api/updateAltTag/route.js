@@ -26,7 +26,7 @@ export const POST = async (req) => {
   });
   // console.log(response, "response");
   const data = await response.json();
-  // console.log(data, 'data from updateAltTag')
+  console.log(data, "data from updateAltTag");
 
   return Response.json(data);
 };
