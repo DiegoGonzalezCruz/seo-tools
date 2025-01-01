@@ -59,20 +59,13 @@ export default function GeneralConfiguration() {
     const checkOllama = async () => {
       try {
         setHealthCheckLoading(true);
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 3000); // Timeout after 3s
 
-        const response = await fetch("http://localhost:11434", {
-          signal: controller.signal,
-        });
+        const response = await fetch("/api/health-check/ollama");
+        console.log(response, "response");
 
-        clearTimeout(timeout);
-
-        if (response.ok) {
-          setOllamaAvailable(true);
-        } else {
-          setOllamaAvailable(false);
-        }
+        const data = await response.json();
+        console.log(data, "data");
+        setOllamaAvailable(data);
       } catch (error) {
         toast.error("Ollama not detected:", error.message);
         setOllamaAvailable(false);
