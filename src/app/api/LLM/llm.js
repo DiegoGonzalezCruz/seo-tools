@@ -4,10 +4,7 @@ import { PromptTemplate } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import sharp from "sharp";
 import { Ollama } from "@langchain/ollama";
-
-const BASE_URL = "http://localhost:11434";
-const MODEL_LLAVA = "llava";
-const MODEL_LLAMA3 = "llama3";
+import { MODEL_LLAMA3, MODEL_LLAVA, OLLAMA_BASE_URL } from "@/lib/config";
 
 function removeQuotes(text) {
   return text.replace(/["]+/g, "");
@@ -15,7 +12,7 @@ function removeQuotes(text) {
 
 export async function isOllamaRunning() {
   try {
-    const response = await axios.get(BASE_URL); // Root endpoint for health check
+    const response = await axios.get(OLLAMA_BASE_URL); // Root endpoint for health check
     if (response.status === 200 && response.data === "Ollama is running") {
       console.log("Ollama is running 🚀");
       return true;
@@ -65,7 +62,7 @@ export async function analyzeImageWithLLava(url) {
 
   const model = new Ollama({
     model: MODEL_LLAVA,
-    baseUrl: BASE_URL,
+    baseUrl: OLLAMA_BASE_URL,
   }).bind({
     images: [imageData],
   });
@@ -84,10 +81,10 @@ export async function analyzeImageWithLLava(url) {
   return { altTag: cleanedRes }; // Wrap the response in an object for consistency
 }
 
-const llm = new Ollama({ baseUrl: BASE_URL, model: MODEL_LLAMA3 });
+const llm = new Ollama({ baseUrl: OLLAMA_BASE_URL, model: MODEL_LLAMA3 });
 
 const llmImages = new Ollama({
-  baseUrl: BASE_URL,
+  baseUrl: OLLAMA_BASE_URL,
   model: MODEL_LLAVA,
 });
 

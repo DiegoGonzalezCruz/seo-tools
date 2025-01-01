@@ -42,31 +42,47 @@ import {
   validateWordPressCredentials,
 } from "@/lib/wordpress";
 import prisma from "@/lib/prisma";
+import { OLLAMA_BASE_URL } from "@/lib/config";
+import toast from "react-hot-toast";
 
 export default function GeneralConfiguration() {
   const [wpSiteURL, setWpSiteURL] = useState("");
   const [wpUsername, setWpUsername] = useState("");
   const [wpPassword, setWpPassword] = useState("");
+  const [ollamaAvailable, setOllamaAvailable] = useState(false);
+  const [healthCheckLoading, setHealthCheckLoading] = useState(false);
 
   const { data, status } = useSession();
   const user = data?.user;
   // console.log(user, "user");
-  const {
-    data: healthCheckData,
-    isLoading: healthCheckLoading,
-    isSuccess: ollamaSuccess,
-  } = useQuery({
-    queryKey: ["ollama-health-check"],
-    queryFn: async () => {
-      const response = await fetch("/api/health-check/ollama");
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+  useEffect(() => {
+    const checkOllama = async () => {
+      try {
+        setHealthCheckLoading(true);
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 3000); // Timeout after 3s
+
+        const response = await fetch("http://localhost:11434", {
+          signal: controller.signal,
+        });
+
+        clearTimeout(timeout);
+
+        if (response.ok) {
+          setOllamaAvailable(true);
+        } else {
+          setOllamaAvailable(false);
+        }
+      } catch (error) {
+        toast.error("Ollama not detected:", error.message);
+        setOllamaAvailable(false);
+      } finally {
+        setHealthCheckLoading(false);
       }
-      return response.json();
-    },
-    refetchInterval: 60 * 1000 * 1,
-    enabled: status === "authenticated" && !!user,
-  });
+    };
+
+    checkOllama();
+  }, []);
 
   const {
     data: wordpressCheckData,
@@ -158,10 +174,10 @@ export default function GeneralConfiguration() {
         <div className="flex items-center space-x-2">
           <Badge
             variant={
-              healthCheckData && wordpressCheckData ? "default" : "destructive"
+              ollamaAvailable && wordpressCheckData ? "default" : "destructive"
             }
           >
-            {healthCheckData && wordpressCheckData ? (
+            {ollamaAvailable && wordpressCheckData ? (
               <>
                 <Check className="mr-1 h-4 w-4" /> All Systems Operational
               </>
@@ -195,18 +211,18 @@ export default function GeneralConfiguration() {
                   <Skeleton className="w-[100px] h-[20px] rounded-full" />
                 ) : (
                   <div className="text-2xl font-bold">
-                    {healthCheckData ? "Connected" : "Disconnected"}
+                    {ollamaAvailable ? "Connected" : "Disconnected"}
                   </div>
                 )}
 
                 <p className="text-xs text-muted-foreground">
                   {healthCheckLoading
                     ? "Loading..."
-                    : healthCheckData
+                    : ollamaAvailable
                       ? "Resource usage: 100%"
                       : "Action required"}
                 </p>
-                <Progress value={healthCheckData ? 100 : 0} className="mt-2" />
+                <Progress value={ollamaAvailable ? 100 : 0} className="mt-2" />
               </CardContent>
             </Card>
 
