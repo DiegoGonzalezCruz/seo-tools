@@ -18,6 +18,7 @@ import {
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Avatar, AvatarImage } from "../ui/avatar";
+import { decode } from "html-entities";
 
 const ImageItem = ({ media, isChecked, onCheckboxChange }) => {
   const queryClient = useQueryClient();
@@ -77,7 +78,7 @@ const ImageItem = ({ media, isChecked, onCheckboxChange }) => {
           </Avatar>
 
           <div className="font-bold">
-            {media.title.rendered ? media.title.rendered : "No Title"}
+            {media.title.rendered ? decode(media.title.rendered) : "No Title"}
           </div>
         </div>
       </TableCell>

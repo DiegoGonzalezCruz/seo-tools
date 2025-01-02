@@ -14,6 +14,7 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import Image from "next/image";
+import { decode } from "html-entities";
 
 const ModalDetails = ({ media, isOpen, onClose }) => {
   return (
@@ -39,7 +40,8 @@ const ModalDetails = ({ media, isOpen, onClose }) => {
             height={200}
           />
           <h3 className="text-lg">
-            <span className="font-bold">Title: </span> {media.title.rendered}
+            <span className="font-bold">Title: </span>{" "}
+            {decode(media.title.rendered)}
           </h3>
           <p className="py-4">
             <span className="font-bold">Alt Tag: </span>
