@@ -35,8 +35,8 @@ const Status = () => {
   });
   const { data: ollamaAvailable, isLoading, isError } = useOllamaRunning();
 
-  console.log(openAIData, "openAIData");
-  console.log(wpData, "wpData");
+  // console.log(openAIData, "openAIData");
+  // console.log(wpData, "wpData");
   return (
     <div>
       <header className="flex justify-between items-center mb-6">

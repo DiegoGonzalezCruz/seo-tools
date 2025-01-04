@@ -7,10 +7,19 @@ import { useWordpressHealthCheck } from "@/hooks/config/useWordpressHealthCheck"
 import { useSession } from "next-auth/react";
 
 const WordpressStatus = () => {
-  const user = useSession();
-  console.log(user, "user");
-  // const { data, isSuccess, isLoading } = useWordpressHealthCheck(userId);
-  // console.log(data, "data");
+  const { data, status } = useSession();
+  // console.log(data, "data user");
+  const user = data?.user;
+  const {
+    data: wpData,
+    isSuccess,
+    isLoading,
+  } = useWordpressHealthCheck({
+    userId: user?.id,
+    enabled: status === "authenticated",
+  });
+
+  // console.log(wpData, "wpData");
 
   return (
     <Card>
@@ -19,22 +28,22 @@ const WordpressStatus = () => {
         <Database className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent>
-        {wordpressCheckLoading ? (
+        {isLoading ? (
           <Skeleton className="w-[100px] h-[20px] rounded-full" />
         ) : (
           <div className="text-2xl font-bold">
-            {wordpressCheckData ? "Connected" : "Disconnected"}
+            {wpData ? "Connected" : "Disconnected"}
           </div>
         )}
 
         <p className="text-xs text-muted-foreground">
-          {wordpressCheckLoading
+          {isLoading
             ? "Loading..."
-            : wordpressCheckData
+            : wpData
               ? "Resource usage: 100%"
               : "Action required"}
         </p>
-        {/* <Progress value={wordpressCheckData ? 100 : 0} className="mt-2" /> */}
+        {/* <Progress value={wpData ? 100 : 0} className="mt-2" /> */}
       </CardContent>
     </Card>
   );
