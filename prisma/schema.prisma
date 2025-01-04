@@ -21,6 +21,7 @@ model User {
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
   wordpressInstances WordPressInstance[]
+  openAIInstances    OpenAIInstance[]
 }
 
 model Account {
@@ -86,6 +87,14 @@ model WordPressInstance {
   userId      String
   user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   isActive    Boolean     @default(false)
+}
+
+model OpenAIInstance {
+  id       Int     @id @default(autoincrement())
+  apiKey   String
+  userId   String
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isActive Boolean @default(false)
 }
 
 model MediaItem {

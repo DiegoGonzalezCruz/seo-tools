@@ -1,6 +1,5 @@
 import GeneralConfiguration from "@/components/Dashboard/GeneralConfiguration";
 import WPConfigDashboard from "@/components/Dashboard/WPConfigDashboard";
-import React from "react";
 
 const WPConfig = () => {
   return (
