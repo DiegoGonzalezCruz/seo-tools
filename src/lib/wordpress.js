@@ -13,11 +13,11 @@ export const getActiveWordPressInstance = (userData) => {
 };
 
 export const getUserWPInstances = async (userId) => {
-  console.log("calling function");
+  // console.log("calling function");
   try {
     const res = await fetch(`/api/wordpressInstances?userId=${userId}`);
     const data = await res.json();
-    console.log(data, "🍄🍄🍄🍄🍄🍄🍄");
+    // console.log(data, "🍄🍄🍄🍄🍄🍄🍄");
     if (data.status !== 200) {
       return null;
     }

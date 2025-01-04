@@ -1,18 +1,27 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useWordpressCredentials } from "@/hooks/config/useWordpressCredentials";
 import { validateWordPressCredentials } from "@/lib/wordpress";
 import { Label } from "@radix-ui/react-label";
 import { useMutation } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 
-const WordpressConfig = ({
-  wpSiteURL,
-  wpUsername,
-  wpPassword,
-  setWpPassword,
-  setWpSiteURL,
-  setWpUsername,
-}) => {
+const WordpressConfig = ({}) => {
+  const data = useSession();
+  console.log("data", data);
+  const {
+    wpPassword,
+    wpSiteURL,
+    wpUsername,
+    setWpPassword,
+    setWpSiteURL,
+    setWpUsername,
+  } = useWordpressCredentials();
+  console.log("wpSiteURL", wpSiteURL);
+  console.log("wpUsername", wpUsername);
+  console.log("wpPassword", wpPassword);
+
   const saveCredentialsMutation = useMutation({
     mutationFn: async () => {
       const isValid = await validateWordPressCredentials(

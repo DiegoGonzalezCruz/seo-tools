@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Status from "./Config/Status";
 import WordpressStatus from "./Config/WordpressStatus";
 import OllamaStatus from "./Config/OllamaStatus";
+import WordpressConfig from "./Config/WordpressConfig";
 
 export default function GeneralConfiguration() {
   return (
@@ -25,20 +26,17 @@ export default function GeneralConfiguration() {
           </div>
         </TabsContent>
 
-        {/* <TabsContent
+        <TabsContent
           value="config"
-          className="flex flex-col md:flex-row items-start justify-center gap-5"
+          className="flex flex-col md:flex-row items-start justify-center gap-5 "
         >
-          <WordpressConfig
-          // wpSiteURL={wpSiteURL}
-          // setWpSiteURL={setWpSiteURL}
-          // wpUsername={wpUsername}
-          // setWpUsername={setWpUsername}
-          // wpPassword={wpPassword}
-          // setWpPassword={setWpPassword}
-          />
+          <WordpressConfig />
+
+          {/*
+
           <OpenAIConfig />
-        </TabsContent> */}
+          */}
+        </TabsContent>
       </Tabs>
     </div>
   );

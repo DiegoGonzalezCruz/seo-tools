@@ -5,7 +5,7 @@ export async function isOllamaRunning() {
   try {
     const response = await axios.get(OLLAMA_BASE_URL); // Root endpoint for health check
     if (response.status === 200 && response.data === "Ollama is running") {
-      console.log("Ollama is running 🚀");
+      // console.log("Ollama is running 🚀");
       return true;
     } else {
       console.log("Ollama is not running. Please start it and try again.");
