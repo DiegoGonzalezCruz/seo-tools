@@ -1,6 +1,5 @@
 "use client";
 import useUserData from "@/lib/hooks/useUserData";
-import { fetchUserData } from "@/lib/users";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";

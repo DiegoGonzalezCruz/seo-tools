@@ -1,16 +1,16 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { validateOpenAICredentials } from "@/lib/openai";
+import { useOpenAICredentials } from "@/hooks/config/useOpenAICredentials";
 
 import { Label } from "@radix-ui/react-label";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const OpenAIConfig = ({}) => {
-  const [openAIAPIKey, setOpenAIAPIKey] = useState("");
-  console.log(openAIAPIKey, "openAIAPIKey");
+  // console.log(openAIAPIKey, "openAIAPIKey");
+  const { openAIAPIKey, setOpenAIAPIKey } = useOpenAICredentials();
 
   const { data: session } = useSession();
   const user = session?.user;
@@ -20,10 +20,18 @@ const OpenAIConfig = ({}) => {
       if (!user || !user.id) {
         return toast.error("User is not authenticated");
       }
-      console.log("inside saveCredentialsMutation");
-      const isValid = validateOpenAICredentials(openAIAPIKey);
-      if (!isValid) {
-        return toast.error("Invalid OpenAI credentials");
+      // Perform the health check directly here
+      const healthCheckResponse = await fetch(
+        `/api/health-check/openai?apiKey=${openAIAPIKey}`,
+        {
+          method: "GET",
+        }
+      );
+
+      const healthCheck = await healthCheckResponse.json();
+
+      if (!healthCheck.valid) {
+        throw new Error(healthCheck.message || "Invalid OpenAI API Key");
       }
 
       const response = await fetch("/api/instances/openai", {
@@ -41,11 +49,10 @@ const OpenAIConfig = ({}) => {
         throw new Error("Failed to save configuration");
       }
       const data = await response.json();
-      console.log(data, "DATA ?????");
+      console.log(data, "Saved Data");
       return data;
     },
     onSuccess: () => {
-      // Invalidate queries or show success message
       toast.success("Configuration saved successfully");
     },
     onError: (error) => {

@@ -5,20 +5,16 @@ import { useQuery } from "@tanstack/react-query";
 //   enabled?: boolean;
 // }
 
-export function useOpenAIHealthCheck(
-  { userId, enabled }
-  // : UseOpenAIHealthCheckProps
-) {
+export function useOpenAIHealthCheck({ apiKey, enabled }) {
   return useQuery({
-    queryKey: ["openai-health-check", userId],
+    queryKey: ["openai-health-check", apiKey],
     queryFn: async () => {
-      const response = await fetch("/api/health-check/openai", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId }),
-      });
+      const response = await fetch(
+        `/api/health-check/openai?apiKey=${apiKey}`,
+        {
+          method: "GET",
+        }
+      );
       return response.json();
     },
     enabled,

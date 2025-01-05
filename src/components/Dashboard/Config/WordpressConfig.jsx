@@ -35,7 +35,7 @@ const WordpressConfig = ({}) => {
         wpPassword
       );
       if (!isValid) {
-        return toast.error("Invalid WordPress credentials");
+        throw new Error("Invalid WordPress credentials");
       }
 
       const response = await fetch("/api/instances/wordpress", {
