@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ImageItem from "./ImageItem";
 import toast from "react-hot-toast";
-import { identifyAndUpdateAltTag } from "@/lib/openAI";
+import { identifyAndUpdateAltTag } from "@/lib/llm";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";

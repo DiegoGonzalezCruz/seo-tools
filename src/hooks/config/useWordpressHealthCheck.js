@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 
-interface UseWordpressHealthCheckProps {
-  userId?: string;
-  enabled?: boolean;
-}
+// interface UseWordpressHealthCheckProps {
+//   userId?: string;
+//   enabled?: boolean;
+// }
 
-export function useWordpressHealthCheck({
-  userId,
-  enabled,
-}: UseWordpressHealthCheckProps) {
+export function useWordpressHealthCheck(
+  { userId, enabled }
+  // : UseWordpressHealthCheckProps
+) {
   return useQuery({
     queryKey: ["wp-health-check", userId],
     queryFn: async () => {

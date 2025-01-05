@@ -5,14 +5,14 @@ import { useSession } from "next-auth/react";
 // hooks/useWordpressCredentials.ts
 import { useState, useEffect } from "react";
 
-interface WPInstance {
-  url: string;
-  appUsername: string;
-  appPassword: string;
-  isActive: boolean;
-}
+// interface WPInstance {
+//   url: string;
+//   appUsername: string;
+//   appPassword: string;
+//   isActive: boolean;
+// }
 
-export function useWordpressCredentials(wpData?: WPInstance[]) {
+export function useWordpressCredentials() {
   const [wpSiteURL, setWpSiteURL] = useState("");
   const [wpUsername, setWpUsername] = useState("");
   const [wpPassword, setWpPassword] = useState("");
@@ -21,14 +21,14 @@ export function useWordpressCredentials(wpData?: WPInstance[]) {
     data: { user },
     status,
   } = useSession();
-  console.log(user, "userData");
+  // console.log(user, "userData");
 
-  const { data } = useQuery({
+  const { data: wpData } = useQuery({
     queryKey: ["wp-instance-data", user],
     queryFn: () => getUserWPInstances(user.id),
     enabled: status === "authenticated" && !!user,
   });
-  console.log(data, "wpData");
+  // console.log(wpData, "wpData");
 
   useEffect(() => {
     if (wpData && wpData.length > 0) {

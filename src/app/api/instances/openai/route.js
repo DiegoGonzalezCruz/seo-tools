@@ -2,61 +2,51 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const POST = async (req, res) => {
+  console.log("POST request received");
   try {
     const body = await req.json();
 
-    const { wpSiteURL, wpPassword, userId, wpUsername, isActive } = body;
+    const { openAIAPIKey, userId } = body;
+    console.log("openAIAPIKey:", openAIAPIKey);
+    console.log("userId:", userId);
 
-    // console.log(wpSiteURL, 'wp site url body 🔥🔥🔥🔥')
-    // console.log(wpPassword, 'wp password body 🔥🔥🔥🔥')
-    // console.log(userId, 'userId body 🔥🔥🔥🔥')
-    // console.log(wpUsername, 'wp username body 🔥🔥🔥🔥')
-
-    if (
-      !wpSiteURL ||
-      wpSiteURL === "" ||
-      !wpPassword ||
-      wpPassword === "" ||
-      !userId ||
-      userId === "" ||
-      !wpUsername ||
-      wpUsername === ""
-    ) {
+    if (!userId || userId === "" || !openAIAPIKey || openAIAPIKey === "") {
       return Response.json(
         { error: "Invalid request: All fields are required" },
         { status: 400 }
       );
     }
 
-    // Check if the WordPress instance already exists
-    const existingInstance = await prisma.wordPressInstance.findFirst({
+    // Check if the API key already exists for the user
+    const existingInstance = await prisma.openAIInstance.findFirst({
       where: {
-        url: wpSiteURL,
+        openAIAPIKey: openAIAPIKey,
         userId: userId,
       },
     });
 
-    let wordpressInstance;
+    let openAIInstance;
     if (existingInstance) {
       // Update the existing instance
-      wordpressInstance = await prisma.wordPressInstance.update({
+      openAIInstance = await prisma.openAIInstance.update({
         where: {
           id: existingInstance.id,
         },
         data: {
-          appPassword: wpPassword,
-          appUsername: wpUsername,
-          isActive: isActive ?? existingInstance.isActive,
+          isActive: true,
         },
       });
     } else {
-      // Create a new instance
-      wordpressInstance = await prisma.wordPressInstance.create({
+      // Deactivate all instances before creating a new one
+      await prisma.openAIInstance.updateMany({
+        where: { userId: userId },
+        data: { isActive: false },
+      });
+
+      openAIInstance = await prisma.openAIInstance.create({
         data: {
-          url: wpSiteURL,
-          appPassword: wpPassword,
-          appUsername: wpUsername,
-          isActive: isActive ?? false,
+          openAIAPIKey: openAIAPIKey,
+          isActive: true,
           user: {
             connect: { id: userId },
           },
@@ -64,10 +54,8 @@ export const POST = async (req, res) => {
       });
     }
 
-    // console.log(wordpressInstance, 'wordpressInstance saved')
-
     return Response.json(
-      { message: "Configuration saved", wordpressInstance },
+      { message: "Configuration saved", openAIInstance },
       { status: 200 }
     );
   } catch (error) {
@@ -90,11 +78,11 @@ export const GET = async (req, res) => {
     if (!userId) {
       return Response.json({ error: "User ID is required" }, { status: 400 });
     }
-    const wordpressInstances = await prisma.wordPressInstance.findMany({
+    const openAIInstances = await prisma.openAIInstance.findMany({
       where: { userId },
     });
-    // console.log(wordpressInstances, "wordpressInstances GET request 🔥🔥🔥🔥");
-    return Response.json({ wordpressInstances, status: 200 });
+    // console.log(openAIInstances, "openAIInstances GET request 🔥🔥🔥🔥");
+    return Response.json({ openAIInstances, status: 200 });
   } catch (error) {
     console.error("Request error", error);
     return res
@@ -109,72 +97,64 @@ export const PUT = async (req, res) => {
   console.log("PUT request received");
   try {
     const body = await req.json();
-    const {
-      wpSiteURL,
-      wpPassword,
-      userId,
-      wpUsername,
-      isActive,
-      ...otherFields
-    } = body;
+    const { openAIAPIKey, userId, isActive, ...otherFields } = body;
     console.log(
-      wpSiteURL,
-      wpPassword,
+      openAIAPIKey,
       userId,
-      wpUsername,
       isActive,
       otherFields,
       "body PUT request 🔥🔥🔥🔥"
     );
 
-    if (!wpSiteURL || !wpPassword || !userId || !wpUsername) {
+    if (!openAIAPIKey || !userId) {
       return Response.json({ error: "All fields are required", status: 400 });
     }
 
-    const existingInstance = await prisma.wordPressInstance.findFirst({
+    const existingInstance = await prisma.openAIInstance.findFirst({
       where: {
-        url: wpSiteURL,
+        openAIAPIKey: openAIAPIKey,
         userId: userId,
       },
     });
 
-    let wordpressInstance;
+    let openAIInstance;
     if (existingInstance) {
-      console.log("Instance already exists:", existingInstance, "🔥🔥🔥🔥");
+      console.log(
+        "OpenAI Instance already exists:",
+        existingInstance,
+        "🔥🔥🔥🔥"
+      );
       // If setting as active, make sure to set all other instances for this user as inactive
       if (isActive) {
         console.log(`Setting other instances for user ${userId} as inactive`);
 
-        await prisma.wordPressInstance.updateMany({
+        await prisma.openAIInstance.updateMany({
           where: { userId: userId },
           data: { isActive: false },
         });
       }
-      wordpressInstance = await prisma.wordPressInstance.update({
+      openAIInstance = await prisma.openAIInstance.update({
         where: {
           id: existingInstance.id,
         },
         data: {
-          appPassword: wpPassword,
-          appUsername: wpUsername,
+          openAIAPIKey: openAIAPIKey,
           isActive: isActive ?? existingInstance.isActive,
           ...otherFields,
         },
       });
-      console.log("Instance updated:", wordpressInstance, "🔥🔥🔥🔥");
+      console.log("Instance updated:", openAIInstance, "🔥🔥🔥🔥");
     } else {
       // If setting as active, make sure to set all other instances for this user as inactive
       if (isActive) {
-        await prisma.wordPressInstance.updateMany({
+        await prisma.openAIInstance.updateMany({
           where: { userId: userId },
           data: { isActive: false },
         });
       }
-      wordpressInstance = await prisma.wordPressInstance.create({
+      openAIInstance = await prisma.openAIInstance.create({
         data: {
-          url: wpSiteURL,
-          appPassword: wpPassword,
-          appUsername: wpUsername,
+          openAIAPIKey: openAIAPIKey,
           user: {
             connect: { id: userId },
           },
@@ -185,7 +165,7 @@ export const PUT = async (req, res) => {
     }
 
     return Response.json(
-      { message: "Configuration saved", wordpressInstance },
+      { message: "Configuration saved", openAIInstance },
       { status: 200 }
     );
   } catch (error) {
@@ -201,31 +181,31 @@ export const PUT = async (req, res) => {
 
 export const DELETE = async (req, res) => {
   try {
-    const { wpSiteURL, userId } = await req.json();
+    const { openAIAPIKey, userId } = await req.json();
 
-    if (!wpSiteURL || !userId) {
+    if (!openAIAPIKey || !userId) {
       return Response(
         JSON.stringify({ error: "URL and User ID are required" }),
         { status: 400 }
       );
     }
 
-    const wordpressInstance = await prisma.wordPressInstance.findFirst({
+    const openAIInstance = await prisma.openAIInstance.findFirst({
       where: {
-        url: wpSiteURL,
+        openAIAPIKey: openAIAPIKey,
         userId: userId,
       },
     });
 
-    if (!wordpressInstance) {
+    if (!openAIInstance) {
       return Response(JSON.stringify({ error: "Instance not found" }), {
         status: 404,
       });
     }
 
-    await prisma.wordPressInstance.delete({
+    await prisma.openAIInstance.delete({
       where: {
-        id: wordpressInstance.id,
+        id: openAIInstance.id,
       },
     });
 

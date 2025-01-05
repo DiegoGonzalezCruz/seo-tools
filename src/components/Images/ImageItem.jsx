@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { identifyAndUpdateAltTag, updateAltTag } from "@/lib/openAI";
+import { identifyAndUpdateAltTag, updateAltTag } from "@/lib/llm";
 import ModalDetails from "../Dashboard/ModalDetails";
 import useUserData from "@/lib/hooks/useUserData";
 import { Button } from "../ui/button";

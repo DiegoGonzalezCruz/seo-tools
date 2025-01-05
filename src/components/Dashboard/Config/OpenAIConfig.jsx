@@ -1,12 +1,58 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { validateOpenAICredentials } from "@/lib/openai";
+
 import { Label } from "@radix-ui/react-label";
+import { useMutation } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 
 const OpenAIConfig = ({}) => {
   const [openAIAPIKey, setOpenAIAPIKey] = useState("");
   console.log(openAIAPIKey, "openAIAPIKey");
+
+  const { data: session } = useSession();
+  const user = session?.user;
+
+  const saveCredentialsMutation = useMutation({
+    mutationFn: async () => {
+      if (!user || !user.id) {
+        return toast.error("User is not authenticated");
+      }
+      console.log("inside saveCredentialsMutation");
+      const isValid = validateOpenAICredentials(openAIAPIKey);
+      if (!isValid) {
+        return toast.error("Invalid OpenAI credentials");
+      }
+
+      const response = await fetch("/api/instances/openai", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          openAIAPIKey,
+          userId: user.id,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save configuration");
+      }
+      const data = await response.json();
+      console.log(data, "DATA ?????");
+      return data;
+    },
+    onSuccess: () => {
+      // Invalidate queries or show success message
+      toast.success("Configuration saved successfully");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
   return (
     <Card className="w-full md:w-1/2 h-full ">
       <CardHeader>

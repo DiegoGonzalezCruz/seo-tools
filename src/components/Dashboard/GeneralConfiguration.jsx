@@ -3,6 +3,7 @@ import Status from "./Config/Status";
 import WordpressStatus from "./Config/WordpressStatus";
 import OllamaStatus from "./Config/OllamaStatus";
 import WordpressConfig from "./Config/WordpressConfig";
+import OpenAIConfig from "./Config/OpenAIConfig";
 
 export default function GeneralConfiguration() {
   return (
@@ -31,11 +32,7 @@ export default function GeneralConfiguration() {
           className="flex flex-col md:flex-row items-start justify-center gap-5 "
         >
           <WordpressConfig />
-
-          {/*
-
           <OpenAIConfig />
-          */}
         </TabsContent>
       </Tabs>
     </div>

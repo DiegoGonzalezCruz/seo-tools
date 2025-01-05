@@ -15,7 +15,11 @@ export const getActiveWordPressInstance = (userData) => {
 export const getUserWPInstances = async (userId) => {
   // console.log("calling function");
   try {
-    const res = await fetch(`/api/wordpressInstances?userId=${userId}`);
+    const res = await fetch(`/api/instances/wordpress?userId=${userId}`);
+
+    if (!res.ok) {
+      console.error("Failed to fetch WordPress instances:", res.statusText);
+    }
     const data = await res.json();
     // console.log(data, "🍄🍄🍄🍄🍄🍄🍄");
     if (data.status !== 200) {
@@ -329,7 +333,10 @@ export const validateWordPressCredentials = async (
 ) => {
   try {
     const base64Credentials = btoa(`${appUsername}:${appPassword}`);
-    console.log(base64Credentials, "🍄🍄🍄🍄🍄🍄🍄 base64Credentials");
+    console.log(
+      base64Credentials,
+      "🍄🍄🍄🍄🍄🍄🍄 VALIDATING base64Credentials"
+    );
     const response = await fetch(`${url}/wp-json/wp/v2/users/me`, {
       method: "GET",
       headers: {

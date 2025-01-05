@@ -6,10 +6,15 @@ import { validateWordPressCredentials } from "@/lib/wordpress";
 import { Label } from "@radix-ui/react-label";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
 const WordpressConfig = ({}) => {
-  const data = useSession();
-  console.log("data", data);
+  const {
+    data: { user },
+    status,
+  } = useSession();
+
+  // console.log("user *****", user);
   const {
     wpPassword,
     wpSiteURL,
@@ -18,9 +23,9 @@ const WordpressConfig = ({}) => {
     setWpSiteURL,
     setWpUsername,
   } = useWordpressCredentials();
-  console.log("wpSiteURL", wpSiteURL);
-  console.log("wpUsername", wpUsername);
-  console.log("wpPassword", wpPassword);
+  // console.log("wpSiteURL", wpSiteURL);
+  // console.log("wpUsername", wpUsername);
+  // console.log("wpPassword", wpPassword);
 
   const saveCredentialsMutation = useMutation({
     mutationFn: async () => {
@@ -30,10 +35,10 @@ const WordpressConfig = ({}) => {
         wpPassword
       );
       if (!isValid) {
-        throw new Error("Invalid WordPress credentials");
+        return toast.error("Invalid WordPress credentials");
       }
 
-      const response = await fetch("/api/wordpressInstances", {
+      const response = await fetch("/api/instances/wordpress", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

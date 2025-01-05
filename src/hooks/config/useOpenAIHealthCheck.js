@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 
-interface UseOpenAIHealthCheckProps {
-  userId?: string;
-  enabled?: boolean;
-}
+// interface UseOpenAIHealthCheckProps {
+//   userId?: string;
+//   enabled?: boolean;
+// }
 
-export function useOpenAIHealthCheck({
-  userId,
-  enabled,
-}: UseOpenAIHealthCheckProps) {
+export function useOpenAIHealthCheck(
+  { userId, enabled }
+  // : UseOpenAIHealthCheckProps
+) {
   return useQuery({
     queryKey: ["openai-health-check", userId],
     queryFn: async () => {
