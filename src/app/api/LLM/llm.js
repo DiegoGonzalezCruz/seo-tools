@@ -5,6 +5,7 @@ import { StringOutputParser } from "@langchain/core/output_parsers";
 import sharp from "sharp";
 import { Ollama } from "@langchain/ollama";
 import { MODEL_LLAMA3, MODEL_LLAVA, OLLAMA_BASE_URL } from "@/lib/config";
+import { isOllamaRunning } from "@/lib/ollama";
 
 function removeQuotes(text) {
   return text.replace(/["]+/g, "");

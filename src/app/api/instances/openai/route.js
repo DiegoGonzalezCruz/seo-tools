@@ -16,18 +16,20 @@ export const POST = async (req, res) => {
         { status: 400 }
       );
     }
-
+    console.log("Creating or updating OpenAI instance");
     // Check if the API key already exists for the user
     const existingInstance = await prisma.openAIInstance.findFirst({
       where: {
-        openAIAPIKey: openAIAPIKey,
+        apiKey: openAIAPIKey,
         userId: userId,
       },
     });
+    console.log("Existing instance:", existingInstance);
 
     let openAIInstance;
     if (existingInstance) {
       // Update the existing instance
+      console.log("Updating existing instance");
       openAIInstance = await prisma.openAIInstance.update({
         where: {
           id: existingInstance.id,
@@ -45,7 +47,7 @@ export const POST = async (req, res) => {
 
       openAIInstance = await prisma.openAIInstance.create({
         data: {
-          openAIAPIKey: openAIAPIKey,
+          apiKey: openAIAPIKey,
           isActive: true,
           user: {
             connect: { id: userId },
@@ -53,6 +55,7 @@ export const POST = async (req, res) => {
         },
       });
     }
+    console.log("OpenAI instance created:", openAIInstance);
 
     return Response.json(
       { message: "Configuration saved", openAIInstance },
@@ -112,7 +115,7 @@ export const PUT = async (req, res) => {
 
     const existingInstance = await prisma.openAIInstance.findFirst({
       where: {
-        openAIAPIKey: openAIAPIKey,
+        apiKey: openAIAPIKey,
         userId: userId,
       },
     });
@@ -138,7 +141,7 @@ export const PUT = async (req, res) => {
           id: existingInstance.id,
         },
         data: {
-          openAIAPIKey: openAIAPIKey,
+          apiKey: openAIAPIKey,
           isActive: isActive ?? existingInstance.isActive,
           ...otherFields,
         },
@@ -154,7 +157,7 @@ export const PUT = async (req, res) => {
       }
       openAIInstance = await prisma.openAIInstance.create({
         data: {
-          openAIAPIKey: openAIAPIKey,
+          apiKey: openAIAPIKey,
           user: {
             connect: { id: userId },
           },
@@ -192,7 +195,7 @@ export const DELETE = async (req, res) => {
 
     const openAIInstance = await prisma.openAIInstance.findFirst({
       where: {
-        openAIAPIKey: openAIAPIKey,
+        apiKey: openAIAPIKey,
         userId: userId,
       },
     });
