@@ -1,5 +1,5 @@
 export const POST = async (req) => {
-  console.log("POST /api/updateAltTag");
+  // console.log("POST /api/updateAltTag");
 
   const { id, altTag, userData } = await req.json();
   // console.log(id, altTag, userData, 'id, altTag,userData')
@@ -10,7 +10,7 @@ export const POST = async (req) => {
   const appPassword = activeInstance.appPassword;
   const appUsername = activeInstance.appUsername;
   const url = activeInstance.url;
-  console.log(appPassword, appUsername, url, "appPassword, appUsername, url");
+  // console.log(appPassword, appUsername, url, "appPassword, appUsername, url");
   const base64Credentials = btoa(`${appUsername}:${appPassword}`);
 
   const response = await fetch(`${url}/wp-json/wp/v2/media/${id}`, {
@@ -26,7 +26,7 @@ export const POST = async (req) => {
   });
   // console.log(response, "response");
   const data = await response.json();
-  console.log(data, "data from updateAltTag");
+  // console.log(data, "data from updateAltTag");
 
   return Response.json(data);
 };

@@ -19,7 +19,7 @@ const WordpressStatus = () => {
     enabled: status === "authenticated",
   });
 
-  console.log(wpData, "wpData");
+  // console.log(wpData, "wpData");
 
   return (
     <Card>

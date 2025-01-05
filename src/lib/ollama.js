@@ -8,7 +8,7 @@ export async function isOllamaRunning() {
       // console.log("Ollama is running 🚀");
       return true;
     } else {
-      console.log("Ollama is not running. Please start it and try again.");
+      // console.log("Ollama is not running. Please start it and try again.");
       return false;
     }
   } catch (error) {

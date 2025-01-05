@@ -49,7 +49,7 @@ const OpenAIConfig = ({}) => {
         throw new Error("Failed to save configuration");
       }
       const data = await response.json();
-      console.log(data, "Saved Data");
+      // console.log(data, "Saved Data");
       return data;
     },
     onSuccess: () => {

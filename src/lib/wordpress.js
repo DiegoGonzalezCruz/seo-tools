@@ -219,7 +219,7 @@ export const uploadImage = async (webpBase64, filename, userData) => {
 };
 
 export const getMediaById = async (id, userData) => {
-  console.log(id, userData, "🍄🍄🍄🍄🍄🍄🍄");
+  // console.log(id, userData, "🍄🍄🍄🍄🍄🍄🍄");
   try {
     const { url, base64Credentials } = getActiveWordPressInstance(userData);
     const response = await fetch(`${url}/wp-json/wp/v2/media/${id}`, {
@@ -277,7 +277,7 @@ export const replaceImageInWordPress = async (mediaId, webpImage, userData) => {
   // )
   try {
     const { url, base64Credentials } = getActiveWordPressInstance(userData);
-    console.log(url, base64Credentials, "🍄🍄🍄🍄🍄🍄🍄");
+    // console.log(url, base64Credentials, "🍄🍄🍄🍄🍄🍄🍄");
 
     const response = await fetch(
       `${url}/wp-json/custom/v1/update-media/${mediaId}`,
@@ -300,7 +300,7 @@ export const replaceImageInWordPress = async (mediaId, webpImage, userData) => {
       );
     }
     const data = await response.json();
-    console.log(data, "data 🇨🇱🇨🇱🇨🇱🇨🇱🇨🇱🇨🇱🇨🇱🇨🇱");
+    // console.log(data, "data 🇨🇱🇨🇱🇨🇱🇨🇱🇨🇱🇨🇱🇨🇱🇨🇱");
     return data;
   } catch (e) {
     console.error("Failed to replace image:", e);
@@ -309,7 +309,7 @@ export const replaceImageInWordPress = async (mediaId, webpImage, userData) => {
 };
 
 export const saveImage = async (webpBase64, filename, pageSlug) => {
-  console.log(webpBase64, filename, pageSlug, "🍄🍄🍄🍄FROM saveImage 🍄🍄🍄");
+  // console.log(webpBase64, filename, pageSlug, "🍄🍄🍄🍄FROM saveImage 🍄🍄🍄");
   try {
     const res = await fetch("/api/media/save", {
       method: "POST",
@@ -333,10 +333,10 @@ export const validateWordPressCredentials = async (
 ) => {
   try {
     const base64Credentials = btoa(`${appUsername}:${appPassword}`);
-    console.log(
-      base64Credentials,
-      "🍄🍄🍄🍄🍄🍄🍄 VALIDATING base64Credentials"
-    );
+    // console.log(
+    //   base64Credentials,
+    //   "🍄🍄🍄🍄🍄🍄🍄 VALIDATING base64Credentials"
+    // );
     const response = await fetch(`${url}/wp-json/wp/v2/users/me`, {
       method: "GET",
       headers: {
@@ -344,7 +344,7 @@ export const validateWordPressCredentials = async (
         "Content-Type": "application/json",
       },
     });
-    console.log(response, "🍄🍄🍄🍄🍄🍄🍄 response");
+    // console.log(response, "🍄🍄🍄🍄🍄🍄🍄 response");
 
     if (!response.ok) {
       throw new Error("Invalid credentials");
@@ -367,7 +367,7 @@ export const getCPTs = async (userData) => {
         Authorization: `Basic ${base64Credentials}`,
       },
     });
-    console.log(res, "🍄🍄🍄🍄🍄🍄🍄 res");
+    // console.log(res, "🍄🍄🍄🍄🍄🍄🍄 res");
     // const total = res.headers.get('X-WP-Total')
     // const totalPages = res.headers.get('X-WP-TotalPages')
     const data = await res.json();
@@ -375,7 +375,7 @@ export const getCPTs = async (userData) => {
       data,
       // total, totalPages
     };
-    console.log(returnedData, "🍄🍄🍄🍄🍄🍄🍄 returned");
+    // console.log(returnedData, "🍄🍄🍄🍄🍄🍄🍄 returned");
     return returnedData;
   } catch (e) {
     console.error("Failed to fetch CPTs:", e);

@@ -24,4 +24,4 @@ const { data: wpData } = useQuery({
   queryFn: () => getUserWPInstances(user.id),
   enabled: status === "authenticated" && !!user,
 });
-console.log(wpData, "wpData");
+// console.log(wpData, "wpData");

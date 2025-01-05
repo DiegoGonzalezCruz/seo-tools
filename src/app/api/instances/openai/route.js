@@ -2,13 +2,13 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const POST = async (req, res) => {
-  console.log("POST request received");
+  // console.log("POST request received");
   try {
     const body = await req.json();
 
     const { openAIAPIKey, userId } = body;
-    console.log("openAIAPIKey:", openAIAPIKey);
-    console.log("userId:", userId);
+    // console.log("openAIAPIKey:", openAIAPIKey);
+    // console.log("userId:", userId);
 
     if (!userId || userId === "" || !openAIAPIKey || openAIAPIKey === "") {
       return Response.json(
@@ -16,7 +16,7 @@ export const POST = async (req, res) => {
         { status: 400 }
       );
     }
-    console.log("Creating or updating OpenAI instance");
+    // console.log("Creating or updating OpenAI instance");
     // Check if the API key already exists for the user
     const existingInstance = await prisma.openAIInstance.findFirst({
       where: {
@@ -24,12 +24,12 @@ export const POST = async (req, res) => {
         userId: userId,
       },
     });
-    console.log("Existing instance:", existingInstance);
+    // console.log("Existing instance:", existingInstance);
 
     let openAIInstance;
     if (existingInstance) {
       // Update the existing instance
-      console.log("Updating existing instance");
+      // console.log("Updating existing instance");
       openAIInstance = await prisma.openAIInstance.update({
         where: {
           id: existingInstance.id,
@@ -55,7 +55,7 @@ export const POST = async (req, res) => {
         },
       });
     }
-    console.log("OpenAI instance created:", openAIInstance);
+    // console.log("OpenAI instance created:", openAIInstance);
 
     return Response.json(
       { message: "Configuration saved", openAIInstance },
@@ -74,7 +74,7 @@ export const POST = async (req, res) => {
 
 export const GET = async (req, res) => {
   try {
-    console.log("GET request WP received");
+    // console.log("GET request OPENAI received");
 
     const userId = req.nextUrl.searchParams.get("userId"); // Extract 'userId' query parameter
     // console.log(userId, "userId GET request 🔥🔥🔥🔥");
@@ -97,17 +97,17 @@ export const GET = async (req, res) => {
 };
 
 export const PUT = async (req, res) => {
-  console.log("PUT request received");
+  // console.log("PUT request received");
   try {
     const body = await req.json();
     const { openAIAPIKey, userId, isActive, ...otherFields } = body;
-    console.log(
-      openAIAPIKey,
-      userId,
-      isActive,
-      otherFields,
-      "body PUT request 🔥🔥🔥🔥"
-    );
+    // console.log(
+    //   openAIAPIKey,
+    //   userId,
+    //   isActive,
+    //   otherFields,
+    //   "body PUT request 🔥🔥🔥🔥"
+    // );
 
     if (!openAIAPIKey || !userId) {
       return Response.json({ error: "All fields are required", status: 400 });
@@ -122,14 +122,14 @@ export const PUT = async (req, res) => {
 
     let openAIInstance;
     if (existingInstance) {
-      console.log(
-        "OpenAI Instance already exists:",
-        existingInstance,
-        "🔥🔥🔥🔥"
-      );
+      // console.log(
+      //   "OpenAI Instance already exists:",
+      //   existingInstance,
+      //   "🔥🔥🔥🔥"
+      // );
       // If setting as active, make sure to set all other instances for this user as inactive
       if (isActive) {
-        console.log(`Setting other instances for user ${userId} as inactive`);
+        // console.log(`Setting other instances for user ${userId} as inactive`);
 
         await prisma.openAIInstance.updateMany({
           where: { userId: userId },
@@ -146,7 +146,7 @@ export const PUT = async (req, res) => {
           ...otherFields,
         },
       });
-      console.log("Instance updated:", openAIInstance, "🔥🔥🔥🔥");
+      // console.log("Instance updated:", openAIInstance, "🔥🔥🔥🔥");
     } else {
       // If setting as active, make sure to set all other instances for this user as inactive
       if (isActive) {

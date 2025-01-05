@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 export const POST = async (req, res) => {
   try {
     const body = await req.json();
-    console.log("body", body);
+    // console.log("body", body);
 
     const { wpSiteURL, wpPassword, userId, wpUsername, isActive } = body;
 
@@ -65,7 +65,7 @@ export const POST = async (req, res) => {
       });
     }
 
-    console.log(wordpressInstance, "wordpressInstance saved");
+    // console.log(wordpressInstance, "wordpressInstance saved");
 
     return Response.json(
       { message: "Configuration saved", wordpressInstance },
@@ -84,7 +84,7 @@ export const POST = async (req, res) => {
 
 export const GET = async (req, res) => {
   try {
-    console.log("GET request WP received");
+    // console.log("GET request WP received");
 
     const userId = req.nextUrl.searchParams.get("userId"); // Extract 'userId' query parameter
     // console.log(userId, "userId GET request 🔥🔥🔥🔥");
@@ -97,7 +97,7 @@ export const GET = async (req, res) => {
     if (wordpressInstances.length === 0 || wordpressInstances === null) {
       return Response.json({ message: "Nothing found" });
     }
-    console.log(wordpressInstances, "wordpressInstances GET request 🔥🔥🔥🔥");
+    // console.log(wordpressInstances, "wordpressInstances GET request 🔥🔥🔥🔥");
     return Response.json({ wordpressInstances, status: 200 });
   } catch (error) {
     console.error("Request error", error);
@@ -110,7 +110,7 @@ export const GET = async (req, res) => {
 };
 
 export const PUT = async (req, res) => {
-  console.log("PUT request received");
+  // console.log("PUT request received");
   try {
     const body = await req.json();
     const {
@@ -121,15 +121,15 @@ export const PUT = async (req, res) => {
       isActive,
       ...otherFields
     } = body;
-    console.log(
-      wpSiteURL,
-      wpPassword,
-      userId,
-      wpUsername,
-      isActive,
-      otherFields,
-      "body PUT request 🔥🔥🔥🔥"
-    );
+    // console.log(
+    //   wpSiteURL,
+    //   wpPassword,
+    //   userId,
+    //   wpUsername,
+    //   isActive,
+    //   otherFields,
+    //   "body PUT request 🔥🔥🔥🔥"
+    // );
 
     if (!wpSiteURL || !wpPassword || !userId || !wpUsername) {
       return Response.json({
@@ -147,10 +147,10 @@ export const PUT = async (req, res) => {
 
     let wordpressInstance;
     if (existingInstance) {
-      console.log("Instance already exists:", existingInstance, "🔥🔥🔥🔥");
+      // console.log("Instance already exists:", existingInstance, "🔥🔥🔥🔥");
       // If setting as active, make sure to set all other instances for this user as inactive
       if (isActive) {
-        console.log(`Setting other instances for user ${userId} as inactive`);
+        // console.log(`Setting other instances for user ${userId} as inactive`);
 
         await prisma.wordPressInstance.updateMany({
           where: { userId: userId },
@@ -168,7 +168,7 @@ export const PUT = async (req, res) => {
           ...otherFields,
         },
       });
-      console.log("Instance updated:", wordpressInstance, "🔥🔥🔥🔥");
+      // console.log("Instance updated:", wordpressInstance, "🔥🔥🔥🔥");
     } else {
       // If setting as active, make sure to set all other instances for this user as inactive
       if (isActive) {

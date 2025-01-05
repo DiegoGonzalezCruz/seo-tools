@@ -18,7 +18,7 @@ export async function fetchImageAsBase64(url) {
 
     // Detect if the image is a WebP and convert it to JPEG
     if (response.headers["content-type"] === "image/webp") {
-      console.log("Converting WebP to JPEG image 🚀");
+      // console.log("Converting WebP to JPEG image 🚀");
       imageBuffer = await sharp(imageBuffer).jpeg().toBuffer();
     }
     return imageBuffer.toString("base64");

@@ -2,10 +2,10 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const POST = async (req) => {
-  console.log("POST /api/health-check/wordpress");
+  // console.log("POST /api/health-check/wordpress");
 
   const { userId } = await req.json();
-  console.log("userId", userId);
+  // console.log("userId", userId);
 
   const wordpressInstance = await prisma.wordPressInstance.findFirst({
     where: {
@@ -13,7 +13,7 @@ export const POST = async (req) => {
       isActive: true,
     },
   });
-  console.log("wordpressInstance", wordpressInstance);
+  // console.log("wordpressInstance", wordpressInstance);
 
   if (!wordpressInstance) {
     return new Response(false, { status: 404 });

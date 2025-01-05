@@ -1,128 +1,128 @@
-'use client'
-import { useState } from 'react'
-import InputImageURL from '@/components/Dashboard/InputImageURL'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
-import { toast } from 'sonner'
-import { Progress } from '@/components/ui/progress'
+"use client";
+import { useState } from "react";
+import InputImageURL from "@/components/Dashboard/InputImageURL";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+import { Progress } from "@/components/ui/progress";
 
 const DashboardPDFCreator = ({ userData }) => {
-  const [targetClass, setTargetClass] = useState('')
-  const [file, setFile] = useState(null)
-  const [progress, setProgress] = useState(0)
-  const [isProcessing, setIsProcessing] = useState(false)
+  const [targetClass, setTargetClass] = useState("");
+  const [file, setFile] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handlePDFCreation = async (url, userData) => {
     try {
-      const res = await fetch('/api/createPDFFromURL', {
-        method: 'POST',
+      const res = await fetch("/api/createPDFFromURL", {
+        method: "POST",
         body: JSON.stringify({ url, userData, targetClass }),
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-      })
+      });
 
       if (res.ok) {
-        const blob = await res.blob()
-        const contentDisposition = res.headers.get('Content-Disposition')
+        const blob = await res.blob();
+        const contentDisposition = res.headers.get("Content-Disposition");
         const filenameMatch =
-          contentDisposition && contentDisposition.match(/filename="(.+)"/)
-        const filename = filenameMatch ? filenameMatch[1] : 'download.pdf'
+          contentDisposition && contentDisposition.match(/filename="(.+)"/);
+        const filename = filenameMatch ? filenameMatch[1] : "download.pdf";
 
         // Create a download link and trigger the download
-        const downloadUrl = window.URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = downloadUrl
-        a.download = filename
-        document.body.appendChild(a)
-        a.click()
-        a.remove()
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = downloadUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
 
-        return { success: true, message: 'PDF generated successfully' }
+        return { success: true, message: "PDF generated successfully" };
       } else {
-        return { success: false, message: 'Failed to generate PDF' }
+        return { success: false, message: "Failed to generate PDF" };
       }
     } catch (error) {
-      console.error('Error during PDF creation:', error)
-      return { success: false, message: 'Error during PDF creation' }
+      console.error("Error during PDF creation:", error);
+      return { success: false, message: "Error during PDF creation" };
     }
-  }
+  };
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0])
-  }
+    setFile(e.target.files[0]);
+  };
 
   const handleFileUpload = async () => {
-    console.log('handleFileUpload:')
+    // console.log('handleFileUpload:')
     if (!file) {
-      console.log('No file uploaded')
-      toast('error', {
-        title: 'No file uploaded',
-        description: 'Please upload a .txt file before proceeding.',
-        status: 'error',
-      })
-      return
+      // console.log('No file uploaded')
+      toast("error", {
+        title: "No file uploaded",
+        description: "Please upload a .txt file before proceeding.",
+        status: "error",
+      });
+      return;
     }
 
-    const reader = new FileReader()
+    const reader = new FileReader();
 
     reader.onload = async (e) => {
-      const text = e.target.result
-      const urls = text.split('\n').filter(Boolean)
-      console.log('urls:', urls)
+      const text = e.target.result;
+      const urls = text.split("\n").filter(Boolean);
+      // console.log("urls:", urls);
 
-      setIsProcessing(true)
-      setProgress(0)
+      setIsProcessing(true);
+      setProgress(0);
 
-      const totalUrls = urls.length
-      let processedUrls = 0
+      const totalUrls = urls.length;
+      let processedUrls = 0;
 
       for (const url of urls) {
         // Display a toast while processing each URL
-        const processingToastId = toast('loading', {
+        const processingToastId = toast("loading", {
           title: `Processing PDF for URL: ${url}`,
-          description: 'Generating PDF, please wait...',
-          status: 'loading',
+          description: "Generating PDF, please wait...",
+          status: "loading",
           duration: Infinity,
-        })
+        });
 
         try {
-          const res = await handlePDFCreation(url, userData)
-          console.log('res:', res)
+          const res = await handlePDFCreation(url, userData);
+          // console.log("res:", res);
 
           if (res.success) {
-            toast.dismiss(processingToastId)
-            toast('Success', {
-              title: 'PDF Created',
+            toast.dismiss(processingToastId);
+            toast("Success", {
+              title: "PDF Created",
               description: `Successfully created PDF for URL: ${url}`,
-              status: 'success',
-            })
+              status: "success",
+            });
           } else {
-            toast('error', {
-              title: 'PDF Generation Failed',
+            toast("error", {
+              title: "PDF Generation Failed",
               description: `Failed to create PDF for URL: ${url}`,
-              status: 'error',
-            })
+              status: "error",
+            });
           }
         } catch (error) {
           toast({
-            title: 'Error',
+            title: "Error",
             description: `Error generating PDF for URL: ${url}`,
-            status: 'error',
-          })
+            status: "error",
+          });
         }
 
         // Update progress
-        processedUrls++
-        setProgress((processedUrls / totalUrls) * 100)
+        processedUrls++;
+        setProgress((processedUrls / totalUrls) * 100);
       }
 
-      setIsProcessing(false)
-    }
+      setIsProcessing(false);
+    };
 
-    reader.readAsText(file)
-  }
+    reader.readAsText(file);
+  };
 
   return (
     <div className="">
@@ -166,7 +166,7 @@ const DashboardPDFCreator = ({ userData }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default DashboardPDFCreator
+export default DashboardPDFCreator;

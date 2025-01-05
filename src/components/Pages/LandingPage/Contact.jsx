@@ -21,7 +21,7 @@ const Contact = () => {
     e.preventDefault();
     // Handle form submission
 
-    console.log("Submitted email:", email, "Description:", description);
+    // console.log("Submitted email:", email, "Description:", description);
   };
   return (
     <section id="support" className="w-full py-12 md:py-24 lg:py-32">

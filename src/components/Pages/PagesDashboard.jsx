@@ -1,66 +1,66 @@
-'use client'
+"use client";
 
-import useGetPages from '@/lib/hooks/useGetPages'
-import useUserData from '@/lib/hooks/useUserData'
-import PagesListing from './PagesListing'
-import Paginator from '../Pagination/Paginator'
-import { useState, useEffect } from 'react'
-import Loading from '../Loading/Loading'
-import { searchInPagesWithSlug } from '@/lib/wordpress'
-import { Input } from '../ui/input'
-import { Button } from '../ui/button'
-import { Card, CardContent, CardHeader } from '../ui/card'
+import useGetPages from "@/lib/hooks/useGetPages";
+import useUserData from "@/lib/hooks/useUserData";
+import PagesListing from "./PagesListing";
+import Paginator from "../Pagination/Paginator";
+import { useState, useEffect } from "react";
+import Loading from "../Loading/Loading";
+import { searchInPagesWithSlug } from "@/lib/wordpress";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Card, CardContent, CardHeader } from "../ui/card";
 
 const PagesDashboard = () => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const [searchSlug, setSearchSlug] = useState('')
-  const [searchResult, setSearchResult] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchSlug, setSearchSlug] = useState("");
+  const [searchResult, setSearchResult] = useState(null);
 
-  const { data: userData, isSuccess, isLoading } = useUserData()
+  const { data: userData, isSuccess, isLoading } = useUserData();
 
   const {
     data: pages,
     isSuccess: isSuccessPages,
     isLoading: isLoadingPages,
-  } = useGetPages(currentPage, 20)
+  } = useGetPages(currentPage, 20);
 
   const handlePrev = () => {
-    setCurrentPage((prev) => Math.max(prev - 1, 1)) // Ensure page doesn't go below 1
-  }
+    setCurrentPage((prev) => Math.max(prev - 1, 1)); // Ensure page doesn't go below 1
+  };
 
   const handleNext = () => {
-    setCurrentPage((prev) => prev + 1) // Increment page
-  }
+    setCurrentPage((prev) => prev + 1); // Increment page
+  };
 
   const handleSearch = async () => {
-    if (!searchSlug) return
+    if (!searchSlug) return;
 
-    const result = await searchInPagesWithSlug(searchSlug, userData)
-    setSearchResult(result)
-  }
+    const result = await searchInPagesWithSlug(searchSlug, userData);
+    setSearchResult(result);
+  };
 
-  console.log(pages, 'pages ✅')
+  // console.log(pages, 'pages ✅')
 
   // console.log(userData, 'userData')
   useEffect(() => {
     const searchPages = async () => {
       if (searchSlug) {
-        const result = await searchInPagesWithSlug(searchSlug, userData)
-        setSearchResult(result)
+        const result = await searchInPagesWithSlug(searchSlug, userData);
+        setSearchResult(result);
       } else {
-        setSearchResult(null)
+        setSearchResult(null);
       }
-    }
+    };
 
     const debounceSearch = setTimeout(() => {
-      searchPages()
-    }, 300) // Delay search by 300ms
+      searchPages();
+    }, 300); // Delay search by 300ms
 
-    return () => clearTimeout(debounceSearch) // Clear timeout if input changes
-  }, [searchSlug, userData])
+    return () => clearTimeout(debounceSearch); // Clear timeout if input changes
+  }, [searchSlug, userData]);
 
   // console.log(pages, 'pages')
-  if (isLoading || isLoadingPages) return <Loading />
+  if (isLoading || isLoadingPages) return <Loading />;
   if (isSuccess && isSuccessPages)
     return (
       <div className="flex flex-col gap-10">
@@ -105,7 +105,7 @@ const PagesDashboard = () => {
           </CardContent>
         </Card>
       </div>
-    )
-}
+    );
+};
 
-export default PagesDashboard
+export default PagesDashboard;

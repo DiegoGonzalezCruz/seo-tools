@@ -45,7 +45,7 @@ const ImageItem = ({ media, isChecked, onCheckboxChange }) => {
   });
 
   const handleOpenModal = () => {
-    console.log("open modal");
+    // console.log("open modal");
     setShowModal(true);
   };
 

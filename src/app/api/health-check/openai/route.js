@@ -16,7 +16,7 @@ export const GET = async (req) => {
         Authorization: `Bearer ${apiKey}`,
       },
     });
-    console.log(response, "RESPONSE");
+    // console.log(response, "RESPONSE");
     if (!response.ok) {
       // console.log("NOT VALID");
       return Response.json({

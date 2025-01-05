@@ -4,6 +4,7 @@ import WordpressStatus from "./Config/WordpressStatus";
 import OllamaStatus from "./Config/OllamaStatus";
 import WordpressConfig from "./Config/WordpressConfig";
 import OpenAIConfig from "./Config/OpenAIConfig";
+import OpenAIStatus from "./Config/OpenAIStatus";
 
 export default function GeneralConfiguration() {
   return (
@@ -24,6 +25,7 @@ export default function GeneralConfiguration() {
           <div className="grid gap-4  md:grid-cols-2 lg:grid-cols-4">
             <OllamaStatus />
             <WordpressStatus />
+            <OpenAIStatus />
           </div>
         </TabsContent>
 

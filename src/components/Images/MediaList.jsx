@@ -44,7 +44,7 @@ const MediaList = ({ media }) => {
   const batchUpdateAltTagMutation = useMutation({
     mutationFn: async (checkedItems) => {
       const ids = Object.keys(checkedItems);
-      console.log(ids, "ids for batch updating");
+      // console.log(ids, "ids for batch updating");
       return await Promise.all(
         ids.map(async (id) => {
           const mediaItem = media.images.find(
