@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SEO Automation Tool
 
-## Getting Started
+## 🚀 Quick Start
 
-First, run the development server:
+This SEO automation tool is designed to streamline the process of generating and updating WordPress media (images) with SEO best practices. By leveraging LLMs through **Next.js**, **Ollama**, and **LangChain**, this tool integrates AI with WordPress to simplify tedious SEO tasks.
+
+---
+
+## 📥 Installation
+
+Follow the steps below to install and run the project locally:
+
+### 1. Clone the Repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git clone https://github.com/DiegoGonzalezCruz/seo-tools.git
+  cd seo-tools
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install Dependencies
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+  npm install
+  # or
+  yarn install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Run Development Server
 
-## Learn More
+```bash
+  npm run dev
+  # or
+  yarn dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Open in Browser
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+  http://localhost:3000
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🛠 Requirements
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Ensure you have the following installed on your local machine:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Node.js** (Latest LTS recommended)
+- **Package Manager**: `npm`, `yarn`, `pnpm`, or `bun`
+- **Ollama** (Running at `http://localhost:11434` by default)
+- **Models**: `llava` and `llama3` (other models may work but are untested)
+
+---
+
+## 🔗 Connecting to WordPress
+
+To connect the tool to your WordPress site:
+
+1. **Generate a WordPress Application Password**
+
+   - Follow this [tutorial](https://youtu.be/f0Why33eS0Y) for step-by-step guidance.
+
+2. **Add Credentials to Environment**
+
+   - Once you have your credentials, add them to the environment file to enable direct media library uploads.
+
+3. **Optional**: Configure additional security plugins if needed. If any issues arise, reach out at **[diego@thinkey.us](mailto:diego@thinkey.us)**.
+
+---
+
+## 🛣 Roadmap
+
+The tool is in active development! Here are upcoming features:
+
+- **OpenAI Integration** – Use OpenAI models as an alternative to local ones.
+- **Automatic Title Generator** – AI-driven title suggestions.
+- **Server-Side Image Updates** – Automate direct updates to server-side images.
+- **Feedback Button** – Report bugs or request features directly.
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! If you’d like to contribute:
+
+1. Fork the repository.
+2. Create a new branch (`feature/your-feature`).
+3. Commit your changes.
+4. Push to the branch and submit a Pull Request.
+
+For any questions or suggestions, feel free to open an issue or reach out.
+
+---
+
+## 📧 Contact
+
+- **Email**: [diego@thinkey.us](mailto:diego@thinkey.us)
+- **GitHub**: [DiegoGonzalezCruz](https://github.com/DiegoGonzalezCruz)
+
+Thank you for your interest in this project!
