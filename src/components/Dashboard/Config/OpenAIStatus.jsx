@@ -9,21 +9,13 @@ import { useState, useEffect } from "react";
 
 const OpenAIStatus = () => {
   const { data, status } = useSession();
-  const user = data?.user;
+  console.log(status, "status from client");
+  console.log(data?.user, "data?.user from client");
 
   const { openAIAPIKey } = useOpenAICredentials();
-  const [readyToCheck, setReadyToCheck] = useState(false);
 
-  // Trigger health check only when the API key is valid
-  useEffect(() => {
-    if (openAIAPIKey && openAIAPIKey.trim() !== "") {
-      setReadyToCheck(true);
-    } else {
-      setReadyToCheck(false);
-    }
-  }, [openAIAPIKey]);
-
-  const isEnabled = status === "authenticated" && readyToCheck;
+  const isEnabled =
+    status === "authenticated" && openAIAPIKey.trim().length > 0;
 
   const {
     data: openaIData,
@@ -33,9 +25,10 @@ const OpenAIStatus = () => {
   } = useOpenAIHealthCheck(openAIAPIKey, isEnabled);
 
   console.log(openAIAPIKey, "openAIAPIKey");
-  console.log(openaIData, "openaIData");
+  console.log(typeof openAIAPIKey, "openAIAPIKey");
+  console.log(openaIData, "openaIData *****");
 
-  const isComponentLoading = isLoading || isFetching || !readyToCheck;
+  const isComponentLoading = isLoading || isFetching;
 
   return (
     <Card>

@@ -6,6 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 // }
 
 export function useOpenAIHealthCheck({ apiKey, enabled }) {
+  console.log(apiKey, "apiKey from HOOK");
+  console.log(enabled, "is enabled from HOOK");
   return useQuery({
     queryKey: ["openai-health-check", apiKey],
     queryFn: async () => {
