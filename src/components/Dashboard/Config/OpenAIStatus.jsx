@@ -11,11 +11,19 @@ const OpenAIStatus = () => {
   const { data, status } = useSession();
   console.log(status, "status from client");
   console.log(data?.user, "data?.user from client");
+  const [readyToCheck, setReadyToCheck] = useState(false);
 
   const { openAIAPIKey } = useOpenAICredentials();
 
-  const isEnabled =
-    status === "authenticated" && openAIAPIKey.trim().length > 0;
+  useEffect(() => {
+    if (openAIAPIKey && openAIAPIKey.trim() !== "") {
+      setReadyToCheck(true);
+    } else {
+      setReadyToCheck(false);
+    }
+  }, [openAIAPIKey]);
+
+  const isEnabled = openAIAPIKey?.trim()?.length > 0 && readyToCheck;
 
   const {
     data: openaIData,
@@ -29,6 +37,9 @@ const OpenAIStatus = () => {
   console.log(openaIData, "openaIData *****");
 
   const isComponentLoading = isLoading || isFetching;
+  if (!openAIAPIKey) {
+    return <p>No API key found. Please check your settings.</p>;
+  }
 
   return (
     <Card>

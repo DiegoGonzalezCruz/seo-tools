@@ -4,12 +4,13 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 
 // Fetch OpenAI instances from the database
-export const getUserOpenAIInstances = async (userId) => {
+async function getUserOpenAIInstances(userId) {
   try {
     const res = await fetch(`/api/instances/openai?userId=${userId}`);
 
     if (!res.ok) {
       console.error("Failed to fetch OpenAI instances:", res.statusText);
+      return null;
     }
 
     const data = await res.json();
@@ -22,7 +23,7 @@ export const getUserOpenAIInstances = async (userId) => {
     console.error("Failed to fetch OpenAI instances:", e);
     return null;
   }
-};
+}
 
 export function useOpenAICredentials() {
   const [openAIAPIKey, setOpenAIAPIKey] = useState("");
