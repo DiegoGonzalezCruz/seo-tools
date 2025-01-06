@@ -15,8 +15,9 @@ const QuickStart = () => {
           <AccordionContent>
             This is an early-stage SEO tool designed to generate and update
             WordPress media (images) with SEO best practices. It leverages LLMs
-            through Next.js, Ollama, and Langchain. It's a work in progress, but
-            it already offers a neat integration between AI and WordPress.
+            through Next.js, Ollama, and Langchain. It&apos;s a work in
+            progress, but it already offers a neat integration between AI and
+            WordPress.
           </AccordionContent>
         </AccordionItem>
 
@@ -72,7 +73,8 @@ const QuickStart = () => {
               <li>
                 <strong>llava</strong> and <strong>llama3</strong> models
                 installed in Ollama. Depending on your hardware, other models
-                may work, but we're only testing with those two at this time.
+                may work, but we&apos;re only testing with those two at this
+                time.
               </li>
             </ul>
           </AccordionContent>
@@ -84,7 +86,7 @@ const QuickStart = () => {
           </AccordionTrigger>
           <AccordionContent>
             <p>
-              You'll need a WordPress Application Password (for the latest
+              You&apos;ll need a WordPress Application Password (for the latest
               version of WordPress). Here’s a concise tutorial:
             </p>
             <p>
@@ -112,24 +114,26 @@ const QuickStart = () => {
           <AccordionTrigger>5. Roadmap and Future Features</AccordionTrigger>
           <AccordionContent>
             <p className="mb-2">
-              This tool is still in active development! Here’s what’s coming:
+              This tool is still in active development! Here&apos;s what&apos;s
+              coming:
             </p>
             <ul className="list-disc ml-5">
               <li>
-                **OpenAI Integration**: We plan on offering an option to swap
-                out the local AI models with OpenAI, if desired.
+                <strong>OpenAI Integration</strong>: We plan on offering an
+                option to swap out the local AI models with OpenAI, if desired.
               </li>
               <li>
-                **Automatic Title Generator**: Seamlessly generate SEO-optimized
-                titles.
+                <strong>Automatic Title Generator</strong>: Seamlessly generate
+                SEO-optimized titles.
               </li>
               <li>
-                **Server-Side Image Updates**: Have the tool update your images
-                directly on the server, no manual uploading required.
+                <strong>Server-Side Image Updates</strong>: Have the tool update
+                your images directly on the server, no manual uploading
+                required.
               </li>
               <li>
-                **Feedback Button**: A quick way for users to share feedback,
-                bug reports, or feature requests.
+                <strong>Feedback Button</strong>: A quick way for users to share
+                feedback, bug reports, or feature requests.
               </li>
             </ul>
             <p className="mt-2">
