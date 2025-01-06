@@ -37,9 +37,6 @@ const OpenAIStatus = () => {
   console.log(openaIData, "openaIData *****");
 
   const isComponentLoading = isLoading || isFetching;
-  if (!openAIAPIKey) {
-    return <p>No API key found. Please check your settings.</p>;
-  }
 
   return (
     <Card>
