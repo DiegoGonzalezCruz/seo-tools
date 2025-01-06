@@ -151,4 +151,8 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .container {
+    @apply px-10 w-full h-full;
+  }
 }

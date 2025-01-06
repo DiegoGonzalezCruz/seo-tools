@@ -125,7 +125,7 @@ const DashboardPDFCreator = ({ userData }) => {
   };
 
   return (
-    <div className="">
+    <div id="pdf-creator" className="px-10">
       <InputImageURL
         userData={userData}
         onSubmit={handlePDFCreation}

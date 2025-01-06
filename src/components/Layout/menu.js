@@ -1,3 +1,4 @@
+import { BrainCircuit } from "lucide-react";
 import {
   BookOpen,
   Brain,
@@ -41,15 +42,15 @@ export const menu = [
 
 export const configMenu = [
   {
+    title: "Quick Start",
+    icon: <BrainCircuit alt="Brain icon" />,
+    href: "/dashboard/quick-start",
+  },
+  {
     title: "Configuration",
     icon: <Cog alt="Cog icon" />,
     href: "/dashboard/configuration",
   },
-  // {
-  //   title: "LLM Configuration",
-  //   icon: <BookOpen alt="Book icon" />,
-  //   href: "/dashboard/llm-configuration",
-  // },
 ];
 
 export const helpMenu = [

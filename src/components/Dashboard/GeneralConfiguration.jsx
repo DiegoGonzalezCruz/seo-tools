@@ -8,7 +8,7 @@ import OpenAIStatus from "./Config/OpenAIStatus";
 
 export default function GeneralConfiguration() {
   return (
-    <div className="container mx-auto p-4 space-y-4  h-full">
+    <div className="container mx-auto space-y-4  h-full">
       <Status />
 
       <Tabs defaultValue="health" className="space-y-4 ">

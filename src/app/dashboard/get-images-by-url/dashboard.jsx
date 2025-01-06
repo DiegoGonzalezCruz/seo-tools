@@ -1,5 +1,5 @@
-'use client'
-import InputImageURL from '@/components/Dashboard/InputImageURL'
+"use client";
+import InputImageURL from "@/components/Dashboard/InputImageURL";
 
 const DashboardGetImages = ({ userData }) => {
   const handleImageConversion = async (url, userData) => {
@@ -7,29 +7,29 @@ const DashboardGetImages = ({ userData }) => {
       // Convert the image to WebP format
       const { fullFilename, webpBase64 } = await convertImage(
         { source_url: url },
-        userData,
-      )
+        userData
+      );
       // Save the converted image
       const saveResult = await saveImage(
         webpBase64,
         fullFilename,
-        'convertedImages',
-      )
-      return { success: true, message: saveResult.filePath }
+        "convertedImages"
+      );
+      return { success: true, message: saveResult.filePath };
     } catch (error) {
-      console.error('Error converting image:', error)
-      return { success: false, message: 'Conversion failed' }
+      console.error("Error converting image:", error);
+      return { success: false, message: "Conversion failed" };
     }
-  }
+  };
   return (
-    <div>
+    <div className="container ">
       <InputImageURL
         userData={userData}
         onSubmit={handleImageConversion}
         buttonLabel="Convert Image"
       />
     </div>
-  )
-}
+  );
+};
 
-export default DashboardGetImages
+export default DashboardGetImages;
