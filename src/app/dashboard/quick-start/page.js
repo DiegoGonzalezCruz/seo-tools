@@ -10,6 +10,19 @@ const QuickStart = () => {
     <div className="container flex flex-col space-y-4">
       <h1 className="text-xl font-bold">Quick Start</h1>
       <Accordion type="single" collapsible>
+        <AccordionItem value="item-0">
+          <AccordionTrigger>0. Quick DEMO</AccordionTrigger>
+          <AccordionContent>
+            <a
+              href="https://youtu.be/EHfAerg4XNs"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 underline"
+            >
+              Watch the Quick DEMO
+            </a>
+          </AccordionContent>
+        </AccordionItem>
         <AccordionItem value="item-1">
           <AccordionTrigger>1. What is this?</AccordionTrigger>
           <AccordionContent>
