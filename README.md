@@ -50,6 +50,11 @@ Ensure you have the following installed on your local machine:
 - **Ollama** (Running at `http://localhost:11434` by default)
 - **Models**: `llava` and `llama3` (other models may work but are untested)
 
+```bash
+ollama run llava
+ollama run llama3
+```
+
 ---
 
 ## 🔗 Connecting to WordPress
