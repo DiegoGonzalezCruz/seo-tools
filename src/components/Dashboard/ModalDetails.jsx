@@ -15,6 +15,7 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import Image from "next/image";
 import { decode } from "html-entities";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 const ModalDetails = ({ media, isOpen, onClose }) => {
   return (
@@ -24,9 +25,14 @@ const ModalDetails = ({ media, isOpen, onClose }) => {
           details
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] md:max-w-xl">
+      <DialogContent
+        className="sm:max-w-[425px] md:max-w-xl"
+        aria-describedby="dialog-description"
+      >
         <DialogHeader>
-          <DialogTitle>Media Details</DialogTitle>
+          <VisuallyHidden>
+            <DialogTitle className="debug">Media Details</DialogTitle>
+          </VisuallyHidden>
           <DialogDescription>
             These are the details of the media item
           </DialogDescription>
