@@ -8,9 +8,9 @@ export default function TermsOfService() {
       </p>
       <h2 className="text-2xl font-semibold mt-6 mb-2">Use of Service</h2>
       <p className="mb-4">
-        Our service is provided on an "as is" basis. We make no guarantees
-        regarding uptime or availability. Support is currently available only
-        via email.
+        Our service is provided on an &quot;as is&quot; basis. We make no
+        guarantees regarding uptime or availability. Support is currently
+        available only via email.
       </p>
       <h2 className="text-2xl font-semibold mt-6 mb-2">
         User Responsibilities
@@ -28,7 +28,7 @@ export default function TermsOfService() {
         damages resulting from your use of the service.
       </p>
       <p>
-        If you have any questions, please contact us at{" "}
+        If you have any questions, please contact us at
         <strong>diego@thinkey.us</strong>.
       </p>
     </div>
