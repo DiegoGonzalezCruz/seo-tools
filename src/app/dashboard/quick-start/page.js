@@ -17,7 +17,11 @@ const QuickStart = () => {
             WordPress media (images) with SEO best practices. It leverages LLMs
             through Next.js, Ollama, and Langchain. It&apos;s a work in
             progress, but it already offers a neat integration between AI and
-            WordPress.
+            WordPress.{" "}
+            <b>
+              It Works in Local only, so you have to download and run it in your
+              computer!
+            </b>
           </AccordionContent>
         </AccordionItem>
 
