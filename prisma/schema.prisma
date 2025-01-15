@@ -22,6 +22,7 @@ model User {
   updatedAt          DateTime            @updatedAt
   wordpressInstances WordPressInstance[]
   openAIInstances    OpenAIInstance[]
+  activeLLM          String?
 }
 
 model Account {

@@ -40,8 +40,8 @@ export const identifyAndUpdateAltTag = async (media, userData) => {
     // console.log(res, "RES ****");
 
     const data = await res.json();
-    // console.log(data, "DATA ****");
-    // console.log(typeof data, "DATA TYPE"); // Should print "object"
+    console.log(data, "DATA ****");
+    console.log(typeof data, "DATA TYPE"); // Should print "object"
 
     if (data.error) {
       // If the backend returns an error message, display it
@@ -55,6 +55,28 @@ export const identifyAndUpdateAltTag = async (media, userData) => {
   } catch (error) {
     toast.dismiss(toastId);
 
+    throw error;
+  }
+};
+
+export const improveTitle = async (media) => {
+  console.log("improving title");
+  try {
+    const res = await fetch("/api/improveTitle", {
+      method: "POST",
+      body: JSON.stringify({ media }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    if (data.error) {
+      throw new Error(data.error);
+    }
+    console.log(data, "TITLE DATA ****");
+    return data.title;
+  } catch (error) {
+    console.log(error);
     throw error;
   }
 };

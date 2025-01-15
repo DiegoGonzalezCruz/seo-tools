@@ -5,6 +5,7 @@ import { Database } from "lucide-react";
 import { Progress } from "@/components/ui/card";
 import { useWordpressHealthCheck } from "@/hooks/config/useWordpressHealthCheck";
 import { useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
 
 const WordpressStatus = () => {
   const { data, status } = useSession();

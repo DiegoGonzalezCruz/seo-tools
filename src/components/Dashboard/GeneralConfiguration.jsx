@@ -1,9 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Status from "./Config/Status";
 import WordpressStatus from "./Config/WordpressStatus";
-import OllamaStatus from "./Config/OllamaStatus";
 import WordpressConfig from "./Config/WordpressConfig";
 import OpenAIConfig from "./Config/OpenAIConfig";
+import OllamaStatus from "./Config/OllamaStatus";
 import OpenAIStatus from "./Config/OpenAIStatus";
 
 export default function GeneralConfiguration() {
@@ -21,11 +21,13 @@ export default function GeneralConfiguration() {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="health" className="space-y-4  ">
+        <TabsContent value="health" className=" ">
           <div className="grid gap-4  md:grid-cols-2 lg:grid-cols-4">
-            <OllamaStatus />
+            <div className="flex flex-col gap-5">
+              <OllamaStatus />
+              <OpenAIStatus />
+            </div>
             <WordpressStatus />
-            <OpenAIStatus />
           </div>
         </TabsContent>
 

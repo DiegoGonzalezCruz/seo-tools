@@ -15,11 +15,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import useUserData from "@/hooks/useUserData";
 
 const MediaList = ({ media }) => {
   const [checkedItems, setCheckedItems] = useState({});
   const [showOnlyMissingAlt, setShowOnlyMissingAlt] = useState(false);
   const queryClient = useQueryClient();
+  const { data: userData } = useUserData();
+  console.log(userData, "userData");
 
   // console.log(showOnlyMissingAlt, "showOnlyMissingAlt");
   // console.log(media, "media");
@@ -115,7 +118,7 @@ const MediaList = ({ media }) => {
 
   return (
     <div className=" w-full ">
-      <div className="flex flex-row gap-5 items-center justify-center  my-5">
+      <div className="flex flex-row gap-5 items-center justify-center   my-5">
         <Button
           className="btn btn-primary btn-xs"
           onClick={() => batchUpdateAltTagMutation.mutate(checkedItems)}

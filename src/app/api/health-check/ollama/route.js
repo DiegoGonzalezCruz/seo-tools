@@ -1,4 +1,4 @@
-import { isOllamaRunning } from "../../LLM/llm";
+import { isOllamaRunning } from "../../LLM/ollama";
 
 export const GET = async (req) => {
   // console.log("GET /api/health-check/ollama");

@@ -25,8 +25,8 @@ async function checkOpenAIHealth(apiKey) {
 
 export function useOpenAIHealthCheck(apiKey, isEnabled) {
   // Observe that we might log 'undefined' or empty string for apiKey initially.
-  console.log(apiKey, "apiKey from HOOK");
-  console.log(isEnabled, "isEnabled from HOOK");
+  // console.log(apiKey, "apiKey from HOOK");
+  // console.log(isEnabled, "isEnabled from HOOK");
 
   return useQuery({
     queryKey: ["openAIHealthCheck", apiKey],

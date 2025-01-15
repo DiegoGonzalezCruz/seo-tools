@@ -1,12 +1,22 @@
-import { analyzeImageWithLLava } from "../LLM/llm";
+import { analyzeImageWithLLava } from "../LLM/ollama";
 import { analyzeImageWithOpenAI } from "../LLM/openai";
 
 export const POST = async (req) => {
-  const { media } = await req.json();
+  const { media, userData } = await req.json();
+  console.log(userData, "userData");
   const imageUrl = media.source_url;
 
   // Call the OpenAI function
-  const rawAltTag = await analyzeImageWithOpenAI(imageUrl);
+
+  let rawAltTag;
+
+  if (userData.activeLLM === "openai") {
+    rawAltTag = await analyzeImageWithOpenAI(imageUrl);
+  } else if (userData.activeLLM === "ollama") {
+    rawAltTag = await analyzeImageWithLLava(imageUrl);
+  } else {
+    throw new Error("Unsupported LLM");
+  }
 
   // Parse the raw string if it's stringified JSON
   let altTag;

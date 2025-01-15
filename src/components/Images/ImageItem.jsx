@@ -22,7 +22,7 @@ import { decode } from "html-entities";
 
 const ImageItem = ({ media, isChecked, onCheckboxChange }) => {
   const queryClient = useQueryClient();
-  const userData = useUserData();
+  const { data: userData } = useUserData();
   // console.log(userData, 'userData from ImageItem 🍄 ************')
 
   const [showModal, setShowModal] = useState(false);

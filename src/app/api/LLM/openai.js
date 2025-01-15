@@ -5,7 +5,7 @@ import { z } from "zod";
 import OpenAI from "openai";
 const openai = new OpenAI();
 
-const schema = z.object({
+const schemaAltTag = z.object({
   alt_tag: z.string(),
 });
 
@@ -26,7 +26,7 @@ export const analyzeImageWithOpenAI = async (mediaUrl) => {
         ],
       },
     ],
-    response_format: zodResponseFormat(schema, "alt_tag"),
+    response_format: zodResponseFormat(schemaAltTag, "alt_tag"),
   });
   const content = response.choices[0].message.content;
 

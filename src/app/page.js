@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import Login from "@/components/Login/Login";
 import LandingPage from "@/components/Pages/LandingPage/Landing";
 
 export const metadata = {
