@@ -1,57 +1,63 @@
 // import { SupabaseVectorStore } from "@langchain/community/vectorstores/supabase";
 // imageUtils.js
-import toast from 'react-hot-toast'
+import toast from "react-hot-toast";
 
 export const updateAltTag = async (id, altTag, userData) => {
   if (!id || !altTag || !userData) {
-    throw new Error('Invalid arguments for updateAltTag')
+    throw new Error("Invalid arguments for updateAltTag");
   }
 
-  const res = await fetch('/api/updateAltTag', {
-    method: 'POST',
+  const res = await fetch("/api/updateAltTag", {
+    method: "POST",
     body: JSON.stringify({ id, altTag, userData }),
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
-  })
+  });
 
   if (!res.ok) {
-    const errorData = await res.json()
-    throw new Error(errorData.message || 'Error updating alt tag')
+    const errorData = await res.json();
+    throw new Error(errorData.message || "Error updating alt tag");
   }
 
-  const data = await res.json()
-  return data
-}
+  const data = await res.json();
+  return data;
+};
 
 export const identifyAndUpdateAltTag = async (media, userData) => {
-  console.log(media.slug, 'media')
-  const toastId = toast.loading(`Analyzing image: ${media.slug}`)
+  // console.log(media, "media");
+  // console.log(userData, "userData");
+  // console.log(media.slug, "media");
+  const toastId = toast.loading(`Analyzing image: ${media.slug}`);
   try {
-    const res = await fetch('/api/identifyImage', {
-      method: 'POST',
+    const res = await fetch("/api/identifyImage", {
+      method: "POST",
       body: JSON.stringify({ media, userData }),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-    })
+    });
+    // console.log(res, "RES ****");
 
-    const data = await res.json()
+    const data = await res.json();
+    // console.log(data, "DATA ****");
+    // console.log(typeof data, "DATA TYPE"); // Should print "object"
+
     if (data.error) {
       // If the backend returns an error message, display it
-      throw new Error(data.error)
+      throw new Error(data.error);
     }
 
-    await updateAltTag(media.id, data.altTag, userData)
-    toast.dismiss(toastId)
-    toast.success('Image analyzed successfully')
-    return data.altTag
+    await updateAltTag(media.id, data.alt_tag, userData);
+    toast.dismiss(toastId);
+
+    return data.altTag;
   } catch (error) {
-    toast.dismiss(toastId)
-    toast.error(error.message || 'Failed to analyze image')
-    throw error
+    toast.dismiss(toastId);
+
+    throw error;
   }
-}
+};
 
 // export const createEmbedding = async () => {
 //   console.log("creating embedding");

@@ -29,10 +29,8 @@ const ModalDetails = ({ media, isOpen, onClose }) => {
         className="sm:max-w-[425px] md:max-w-xl"
         aria-describedby="dialog-description"
       >
+        <DialogTitle className="debug">Media Details</DialogTitle>
         <DialogHeader>
-          <VisuallyHidden>
-            <DialogTitle className="debug">Media Details</DialogTitle>
-          </VisuallyHidden>
           <DialogDescription>
             These are the details of the media item
           </DialogDescription>

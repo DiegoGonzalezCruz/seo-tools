@@ -37,22 +37,30 @@ const Status = () => {
 
   // console.log(openAIData, "openAIData");
   // console.log(wpData, "wpData");
+  const isStatusLoading = wpLoading || openAILoading || isLoading;
+  const isLLMSuccess = wpIsSuccess && openAIIsSuccess;
+  const isLLMReady = wpData && openAIData;
+
   return (
     <div>
       <header className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">LLM Integration Dashboard</h1>
         <div className="flex items-center space-x-2"></div>
-        <Badge variant={ollamaAvailable && wpData ? "default" : "destructive"}>
-          {ollamaAvailable && wpData ? (
-            <>
-              <Check className="mr-1 h-4 w-4" /> All Systems Operational
-            </>
-          ) : (
-            <>
-              <AlertCircle className="mr-1 h-4 w-4" /> Action Required
-            </>
-          )}
-        </Badge>
+        {isStatusLoading ? (
+          "loading"
+        ) : (
+          <Badge variant={isLLMSuccess ? "default" : "destructive"}>
+            {isLLMReady ? (
+              <>
+                <Check className="mr-1 h-4 w-4" /> All Systems Operational
+              </>
+            ) : (
+              <>
+                <AlertCircle className="mr-1 h-4 w-4" /> Action Required
+              </>
+            )}
+          </Badge>
+        )}
       </header>
     </div>
   );

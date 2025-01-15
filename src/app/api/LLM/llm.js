@@ -6,6 +6,7 @@ import sharp from "sharp";
 import { Ollama } from "@langchain/ollama";
 import { MODEL_LLAMA3, MODEL_LLAVA, OLLAMA_BASE_URL } from "@/lib/config";
 import { isOllamaRunning } from "@/lib/ollama";
+import { seoAltTagPromptTemplate } from "@/config/prompts";
 
 function removeQuotes(text) {
   return text.replace(/["]+/g, "");
@@ -51,9 +52,7 @@ export async function analyzeImageWithLLava(url) {
     images: [imageData],
   });
 
-  const promptTemplate = PromptTemplate.fromTemplate(
-    "Generate an ALT tag for this image. The description should be a clear, concise sentence without quotes or special characters."
-  );
+  const promptTemplate = PromptTemplate.fromTemplate(seoAltTagPromptTemplate);
   const chain = RunnableSequence.from([
     promptTemplate,
     model,
