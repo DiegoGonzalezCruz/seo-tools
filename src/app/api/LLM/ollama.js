@@ -61,7 +61,11 @@ export async function analyzeImageWithLLava(url) {
 
   const res = await chain.invoke();
   const cleanedRes = removeQuotes(res);
-  return { altTag: cleanedRes }; // Wrap the response in an object for consistency
+
+  const output = { alt_tag: cleanedRes };
+  console.log(output, "OUTPUT OLLAMA");
+  console.log(typeof output);
+  return output; // Wrap the response in an object for consistency
 }
 
 const llm = new Ollama({ baseUrl: OLLAMA_BASE_URL, model: MODEL_LLAMA3 });

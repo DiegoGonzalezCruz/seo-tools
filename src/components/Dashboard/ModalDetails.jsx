@@ -16,10 +16,18 @@ import { Input } from "../ui/input";
 import Image from "next/image";
 import { decode } from "html-entities";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { improveTitle } from "@/app/api/LLM/openai";
 
 const ModalDetails = ({ media, isOpen, onClose }) => {
+  const improveTitleHandler = async (title) => {
+    console.log(title, "title");
+    const res = await improveTitle(title);
+    console.log(res, "RES LLM");
+    return res;
+  };
+
   return (
-    <Dialog>
+    <Dialog className="">
       <DialogTrigger asChild>
         <Button variant="secondary" className="btn btn-ghost btn-xs">
           details
@@ -29,7 +37,7 @@ const ModalDetails = ({ media, isOpen, onClose }) => {
         className="sm:max-w-[425px] md:max-w-xl"
         aria-describedby="dialog-description"
       >
-        <DialogTitle className="debug">Media Details</DialogTitle>
+        <DialogTitle className="">Media Details</DialogTitle>
         <DialogHeader>
           <DialogDescription>
             These are the details of the media item
@@ -43,10 +51,19 @@ const ModalDetails = ({ media, isOpen, onClose }) => {
             width={200}
             height={200}
           />
-          <h3 className="text-lg">
-            <span className="font-bold">Title: </span>{" "}
-            {decode(media.title.rendered)}
-          </h3>
+          <div className="">
+            <h3 className="text-lg">
+              <span className="font-bold">Title: </span>{" "}
+              {decode(media.title.rendered)}
+            </h3>
+            {/* <Button
+              variant="default"
+              className=""
+              onClick={() => improveTitleHandler(media.title.rendered)}
+            >
+              Improve Title
+            </Button> */}
+          </div>
           <p className="py-4">
             <span className="font-bold">Alt Tag: </span>
             {!media.alt_text ? (

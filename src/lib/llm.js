@@ -59,28 +59,6 @@ export const identifyAndUpdateAltTag = async (media, userData) => {
   }
 };
 
-export const improveTitle = async (media) => {
-  console.log("improving title");
-  try {
-    const res = await fetch("/api/improveTitle", {
-      method: "POST",
-      body: JSON.stringify({ media }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await res.json();
-    if (data.error) {
-      throw new Error(data.error);
-    }
-    console.log(data, "TITLE DATA ****");
-    return data.title;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
 // export const createEmbedding = async () => {
 //   console.log("creating embedding");
 //   try {

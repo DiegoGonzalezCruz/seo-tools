@@ -73,7 +73,7 @@ const ImageItem = ({ media, isChecked, onCheckboxChange }) => {
               height={200}
               src={media.source_url}
               alt={media.alt_text}
-              className="object-scale-down debug"
+              className="object-scale-down "
             />
           </Avatar>
 
