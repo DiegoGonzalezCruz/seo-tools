@@ -2,12 +2,12 @@ export const POST = async (req) => {
   // console.log("POST /api/updateAltTag");
 
   const { id, altTag, userData } = await req.json();
-  console.log(
-    id,
-    altTag,
-    userData,
-    "************** id, altTag,userData ************** "
-  );
+  // console.log(
+  //   id,
+  //   altTag,
+  //   userData,
+  //   "************** id, altTag,userData ************** "
+  // );
   const activeInstance = userData.wordpressInstances.find(
     (instance) => instance.isActive
   );

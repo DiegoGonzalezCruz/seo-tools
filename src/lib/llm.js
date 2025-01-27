@@ -40,8 +40,8 @@ export const identifyAndUpdateAltTag = async (media, userData) => {
     // console.log(res, "RES ****");
 
     const data = await res.json();
-    console.log(data, "DATA ****");
-    console.log(typeof data, "DATA TYPE"); // Should print "object"
+    // console.log(data, "DATA ****");
+    // console.log(typeof data, "DATA TYPE"); // Should print "object"
 
     if (data.error) {
       // If the backend returns an error message, display it

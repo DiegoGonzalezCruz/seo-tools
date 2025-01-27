@@ -3,9 +3,15 @@
 import { seoAltTagPromptTemplate } from "@/config/prompts";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { z } from "zod";
-
 import OpenAI from "openai";
-const openai = new OpenAI();
+
+export const getOpenAIClient = async (user) => {
+  console.log(user, "user");
+  const openaiAPIKey = user.openAIInstances.find((el) => el.isActive).apiKey;
+  console.log(openaiAPIKey, " API KEY ");
+  const openai = new OpenAI({ openaiAPIKey });
+  return openai;
+};
 
 const schemaAltTag = z.object({
   alt_tag: z.string(),
@@ -15,8 +21,9 @@ const schemaTitle = z.object({
   title: z.string(),
 });
 
-export const analyzeImageWithOpenAI = async (mediaUrl) => {
-  const response = await openai.chat.completions.create({
+export const analyzeImageWithOpenAI = async (mediaUrl, userData) => {
+  const openaiClient = await getOpenAIClient(userData);
+  const response = await openaiClient.chat.completions.create({
     model: "gpt-4o-mini",
     messages: [
       {

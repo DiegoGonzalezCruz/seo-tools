@@ -3,7 +3,7 @@ import { analyzeImageWithOpenAI } from "../LLM/openai";
 
 export const POST = async (req) => {
   const { media, userData } = await req.json();
-  console.log(userData, "userData");
+  // console.log(userData, "userData");
   const imageUrl = media.source_url;
 
   // Call the OpenAI function
@@ -11,7 +11,7 @@ export const POST = async (req) => {
   let rawAltTag;
 
   if (userData.activeLLM === "openai") {
-    rawAltTag = await analyzeImageWithOpenAI(imageUrl);
+    rawAltTag = await analyzeImageWithOpenAI(imageUrl, userData);
   } else if (userData.activeLLM === "ollama") {
     rawAltTag = await analyzeImageWithLLava(imageUrl);
   } else {
@@ -27,7 +27,7 @@ export const POST = async (req) => {
     altTag = rawAltTag; // If not JSON, use as is
   }
 
-  console.log({ alt_tag: altTag }, "response from POST /api/identifyImage");
+  // console.log({ alt_tag: altTag }, "response from POST /api/identifyImage");
 
   // Return the response wrapped in an object
   return Response.json({ alt_tag: altTag });
